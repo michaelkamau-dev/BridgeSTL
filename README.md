@@ -2,7 +2,7 @@
 
 A mobile-first web app connecting households in St. Louis City, North County, and the Metro East (Illinois) to free and low-cost internet, devices, and in-person tech help.
 
-Built for the 2026 Congressional App Challenge, Illinois 13th District.
+Built for the 2026 Congressional App Challenge, Illinois 15th District.
 
 ## Why this exists
 
