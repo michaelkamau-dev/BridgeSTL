@@ -112,7 +112,7 @@
       border-radius: 0;
     }
 
-    /* ---------- Top bar: app name + plain text navigation ---------- */
+    /* ---------- Top bar: brand + plain text navigation ---------- */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -120,9 +120,10 @@
     }
 
     .topbar {
-      max-width: 1160px;
+      max-width: 1128px;
+      min-height: 68px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 24px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -130,26 +131,42 @@
       gap: 0 24px;
     }
 
-    /* Full logo in the top bar; it links back to Home */
-    .app-name {
-      display: block;
-      padding: 8px 0;
+    /* Symbol from the logo file plus a readable wordmark; returns to Home */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
     }
 
-    .app-name svg {
+    .brand svg {
       display: block;
-      height: 64px;
+      height: 44px;
       width: auto;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 1.375rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1;
+    }
+
+    .brand:hover .brand-name {
+      color: var(--accent-strong);
     }
 
     nav {
       display: flex;
-      gap: 24px;
+      gap: 28px;
       align-self: stretch;
     }
 
     nav button {
-      min-height: 48px;
+      min-height: 44px;
       padding: 0 2px;
       border: 0;
       border-bottom: 2px solid transparent;
@@ -157,6 +174,7 @@
       color: var(--text-2);
       font: inherit;
       font-size: .9375rem;
+      font-weight: 500;
       cursor: pointer;
     }
 
@@ -166,27 +184,31 @@
 
     nav button.active {
       color: var(--text);
-      font-weight: 500;
       border-bottom-color: var(--accent);
     }
 
     @media (max-width: 599px) {
-      .app-name {
-        padding: 8px 0 0;
+      .topbar {
+        min-height: 0;
+        padding: 0 16px;
       }
 
-      .app-name svg {
-        height: 52px;
+      .footer-inner {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .brand {
+        padding-top: 10px;
+      }
+
+      .brand svg {
+        height: 34px;
       }
 
       nav {
         width: 100%;
-        gap: 20px;
-      }
-
-      nav button {
-        min-height: 44px;
-        font-size: .9375rem;
+        gap: 22px;
       }
     }
 
@@ -202,7 +224,7 @@
     main {
       flex: 1 0 auto;
       width: 100%;
-      max-width: 1160px;
+      max-width: 1128px;
       margin: 0 auto;
       padding: 32px 16px 48px;
     }
@@ -249,11 +271,11 @@
     }
 
     .footer-inner {
-      max-width: 1160px;
+      max-width: 1128px;
       margin: 0 auto;
-      padding: 28px 16px calc(32px + var(--safe-bottom));
+      padding: 18px 24px calc(20px + var(--safe-bottom));
       display: grid;
-      gap: 16px 48px;
+      gap: 10px 48px;
     }
 
     /* Side by side only when both note lines fit on one row each;
@@ -282,15 +304,163 @@
       margin-bottom: 2px;
     }
 
-    .footer-notes p + p {
+    .footer-notes p+p {
       margin-top: 2px;
     }
 
     /* ---------- Home ---------- */
-    .coverage {
-      font-size: .875rem;
+    #view-home {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* Introduction on the left, the two entry actions on the right */
+    .home-main {
+      display: grid;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      font-size: .9375rem;
+      font-weight: 500;
+      color: var(--accent-strong);
+      margin-bottom: 10px;
+    }
+
+    .home-intro h2 {
+      font-size: 2rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .lede {
+      font-size: 1.125rem;
       color: var(--text-2);
-      margin-bottom: 6px;
+      max-width: 36ch;
+    }
+
+    .home-actions {
+      border-top: 1px solid var(--border-strong);
+    }
+
+    /* Each action is one real link; the whole row is clickable */
+    .home-action {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 20px;
+      align-items: center;
+      padding: 22px 12px;
+      border-bottom: 1px solid var(--border-strong);
+      color: var(--text);
+      text-decoration: none;
+      transition: background-color .2s ease;
+    }
+
+    .home-action:hover {
+      background: var(--stripe);
+    }
+
+    .home-action:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .action-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--accent-strong);
+    }
+
+    .action-desc {
+      grid-column: 1;
+      margin-top: 4px;
+      color: var(--text-2);
+    }
+
+    .action-arrow {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      width: 22px;
+      height: 22px;
+      color: var(--accent-strong);
+      transition: transform .2s ease;
+    }
+
+    .home-action:hover .action-arrow,
+    .home-action:focus-visible .action-arrow {
+      transform: translateX(4px);
+    }
+
+    .home-about {
+      display: grid;
+      gap: 8px 72px;
+      margin-top: 36px;
+    }
+
+    .home-about h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+
+    .home-about p {
+      color: var(--text-2);
+      max-width: 60ch;
+    }
+
+    .home-about .home-fine {
+      margin-top: 8px;
+      font-size: .875rem;
+    }
+
+    @media (min-width: 900px) {
+      .home-main {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 72px;
+        align-items: center;
+      }
+
+      .home-intro h2 {
+        font-size: 2.625rem;
+      }
+
+      /* On desktop the actions sit beside the intro, so a full-width rule
+         separates this section; on phones the last action's rule does that */
+      .home-about {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        margin-top: 64px;
+        padding-top: 28px;
+        border-top: 1px solid var(--border);
+      }
+
+    }
+
+    /* On tablets and desktops, center Home between header and footer so the
+       footer sits low without a big empty gap under the content. Phones keep
+       Home top-aligned so the actions come first. */
+    @media (min-width: 600px) {
+      main {
+        display: flex;
+        flex-direction: column;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      #view-home.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1 0 auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-action,
+      .action-arrow {
+        transition: none;
+      }
     }
 
     /* Hidden on screen, still read by screen readers */
@@ -304,49 +474,6 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
-    }
-
-    .purpose {
-      max-width: 62ch;
-      margin-bottom: 16px;
-    }
-
-    .entry-links {
-      list-style: none;
-      margin: 0 0 28px;
-      border-top: 1px solid var(--border);
-    }
-
-    .entry-links li {
-      border-bottom: 1px solid var(--border);
-      padding: 16px 0;
-    }
-
-    .entry-links a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      font-size: 1.125rem;
-      font-weight: 500;
-      text-decoration: none;
-    }
-
-    .entry-links a::after {
-      content: "\2192";
-      margin-left: 8px;
-    }
-
-    .entry-links a:hover {
-      text-decoration: underline;
-    }
-
-    .entry-links p {
-      color: var(--text-2);
-    }
-
-    .home-note {
-      font-size: .9375rem;
-      color: var(--text-2);
     }
 
     /* ---------- Forms ---------- */
@@ -430,7 +557,7 @@
     }
 
     /* Divider goes on the first row, not the fieldset, so the legend stays clear of it */
-    .choice-list legend + .choice {
+    .choice-list legend+.choice {
       border-top: 1px solid var(--border);
     }
 
@@ -460,7 +587,7 @@
       display: block;
     }
 
-    .choice input:checked + span .choice-title {
+    .choice input:checked+span .choice-title {
       font-weight: 500;
     }
 
@@ -496,7 +623,7 @@
       padding: 20px 0 4px;
     }
 
-    .step + .step {
+    .step+.step {
       border-top: 1px solid var(--border);
     }
 
@@ -515,7 +642,7 @@
       gap: 0 16px;
     }
 
-    .field-row > div {
+    .field-row>div {
       margin-bottom: 12px;
     }
 
@@ -658,7 +785,7 @@
       border-top: 1px solid var(--border);
     }
 
-    details.more > summary {
+    details.more>summary {
       cursor: pointer;
       min-height: 48px;
       display: flex;
@@ -721,7 +848,7 @@
       border-top: 1px solid var(--border);
     }
 
-    details.req > summary {
+    details.req>summary {
       cursor: pointer;
       min-height: 44px;
       display: flex;
@@ -806,7 +933,7 @@
 
       .help-map {
         position: sticky;
-        top: 104px;
+        top: 92px;
       }
     }
 
@@ -1111,10 +1238,13 @@
 
   <header>
     <div class="topbar">
-      <a class="app-name" href="#view-home" data-go="view-home">
-        <svg role="img" aria-label="BridgeSTL home" viewBox="222 240 816 802">
+      <a class="brand" href="#view-home" data-go="view-home" aria-label="BridgeSTL, Home">
+        <!-- Shows only the Arch-and-Illinois symbol from the logo file; the
+             image's own lettering is too small to read at header size -->
+        <svg aria-hidden="true" focusable="false" viewBox="230 250 800 604">
           <image href="icons/bridgestl-logo.png" width="1254" height="1254"></image>
         </svg>
+        <span class="brand-name">BridgeSTL</span>
       </a>
       <nav aria-label="Main">
         <button class="active" data-view="view-home" aria-current="page">Home</button>
@@ -1127,28 +1257,40 @@
   <main>
 
     <!-- ============ HOME ============ -->
-    <section class="view active narrow" id="view-home">
-      <!-- The logo lives in the top bar; this heading is for screen readers -->
-      <h2 class="visually-hidden" tabindex="-1">BridgeSTL home</h2>
+    <section class="view active" id="view-home">
+      <div class="home-main">
+        <div class="home-intro">
+          <p class="eyebrow">St. Louis &amp; Metro East</p>
+          <h2 tabindex="-1">Get connected. Stay connected.</h2>
+          <p class="lede">Find a computer, affordable home internet, or a place nearby to get online.</p>
+        </div>
 
-      <ul class="entry-links">
-        <li>
-          <a href="#view-guide" data-go="view-guide">Get a device or home internet</a>
-          <p>Computers to keep, laptops and hotspots to borrow, and internet discounts, with who qualifies and how to apply.</p>
-        </li>
-        <li>
-          <a href="#view-directory" data-go="view-directory">Find computer access or help nearby</a>
-          <p>Libraries and help desks with public computers, Wi-Fi, printing, and tech help, on a map.</p>
-        </li>
-      </ul>
+        <div class="home-actions">
+          <a class="home-action" href="#view-guide" data-go="view-guide">
+            <span class="action-title">Get a device or home internet</span>
+            <span class="action-desc">Explore computers to keep, devices to borrow, and internet programs.</span>
+            <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+            </svg>
+          </a>
+          <a class="home-action" href="#view-directory" data-go="view-directory">
+            <span class="action-title">Find help nearby</span>
+            <span class="action-desc">Locate public computers, Wi-Fi, printing, and in-person assistance.</span>
+            <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+            </svg>
+          </a>
+        </div>
+      </div>
 
-      <p class="coverage">St. Louis region &amp; Metro East</p>
-      <p class="purpose">BridgeSTL puts Missouri and Illinois resources in one place: low-cost and free
-        computers, library device loans, internet discounts, libraries with public computers, and tech help.
-        Each listing links to the organization's official page and shows the date we checked it.</p>
-
-      <p class="home-note">This site does not take applications or hand out devices. Program details and hours change,
-        so call ahead.</p>
+      <section class="home-about" aria-labelledby="home-about-heading">
+        <h3 id="home-about-heading">Local options. Clear next steps.</h3>
+        <div>
+          <p>BridgeSTL brings Missouri and Illinois resources together so you can review requirements and follow
+            official application links.</p>
+          <p class="home-fine">Applications are completed with the organizations listed.</p>
+        </div>
+      </section>
     </section>
 
     <!-- ============ GET CONNECTED ============ -->
@@ -1158,9 +1300,15 @@
       <form id="guide-form" novalidate>
         <fieldset class="choice-list" id="need-options">
           <legend class="fld question">What's keeping you from getting connected?</legend>
-          <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span class="choice-title">I don't have a computer</span><span class="choice-desc">Get one to keep, free or at low cost</span></span></label>
-          <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">I need a laptop or hotspot for a while</span><span class="choice-desc">Borrow one for a few weeks</span></span></label>
-          <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span class="choice-title">Home internet costs too much</span><span class="choice-desc">Find a discount or a low-cost monthly plan</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span
+                class="choice-title">I don't have a computer</span><span class="choice-desc">Get one to keep, free or at
+                low cost</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">I
+                need a laptop or hotspot for a while</span><span class="choice-desc">Borrow one for a few
+                weeks</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span
+                class="choice-title">Home internet costs too much</span><span class="choice-desc">Find a discount or a
+                low-cost monthly plan</span></span></label>
         </fieldset>
 
         <div id="guide-questions" hidden>
@@ -1187,8 +1335,10 @@
               <legend class="fld">Age</legend>
               <p class="step-hint">The library device loans we found are for adult cardholders.</p>
               <div class="choice-row">
-                <label class="choice"><input type="radio" name="guide-age" value="yes"><span><span class="choice-title">18 or older</span></span></label>
-                <label class="choice"><input type="radio" name="guide-age" value="no"><span><span class="choice-title">Under 18</span></span></label>
+                <label class="choice"><input type="radio" name="guide-age" value="yes"><span><span
+                      class="choice-title">18 or older</span></span></label>
+                <label class="choice"><input type="radio" name="guide-age" value="no"><span><span
+                      class="choice-title">Under 18</span></span></label>
               </div>
             </fieldset>
           </div>
@@ -1214,7 +1364,8 @@
                 <input type="number" id="g-income" inputmode="numeric" placeholder="Example: 32000" min="0">
               </div>
             </div>
-            <label class="check-row"><input type="checkbox" id="g-income-unknown"> I don't know or prefer not to say</label>
+            <label class="check-row"><input type="checkbox" id="g-income-unknown"> I don't know or prefer not to
+              say</label>
           </div>
 
           <div class="step" data-for="computer internet" hidden>
@@ -1230,7 +1381,8 @@
                 <label class="check-row"><input type="checkbox" value="liheap"> LIHEAP (energy assistance)</label>
                 <label class="check-row"><input type="checkbox" value="housing"> Section 8 or public housing</label>
                 <label class="check-row"><input type="checkbox" value="pell"> Federal Pell Grant</label>
-                <label class="check-row"><input type="checkbox" value="vet"> Veterans Pension or Survivors Benefit</label>
+                <label class="check-row"><input type="checkbox" value="vet"> Veterans Pension or Survivors
+                  Benefit</label>
                 <label class="check-row"><input type="checkbox" value="headstart"> Head Start</label>
                 <label class="check-row"><input type="checkbox" value="none"> None of these</label>
                 <label class="check-row"><input type="checkbox" value="unknown"> I don't know</label>
@@ -1288,12 +1440,14 @@
             <p class="filter-label" id="amenity-label">Service</p>
             <div class="filters" id="amenity-filters" role="group" aria-labelledby="amenity-label">
               <button class="chip on" type="button" data-need="all" aria-pressed="true">All services</button>
-              <button class="chip" type="button" data-need="public-computer" aria-pressed="false">Public computers</button>
+              <button class="chip" type="button" data-need="public-computer" aria-pressed="false">Public
+                computers</button>
               <button class="chip" type="button" data-need="wifi" aria-pressed="false">Free Wi-Fi</button>
               <button class="chip" type="button" data-need="printing" aria-pressed="false">Printing</button>
               <button class="chip" type="button" data-need="navigator" aria-pressed="false">Tech help</button>
             </div>
-            <p class="filter-aside">Need a laptop or hotspot to take home? <a href="#view-guide" data-go="view-guide">Get connected</a> lists device loans.</p>
+            <p class="filter-aside">Need a laptop or hotspot to take home? <a href="#view-guide"
+                data-go="view-guide">Get connected</a> lists device loans.</p>
           </div>
 
           <div class="area-bar">
@@ -1318,7 +1472,7 @@
         <p>Built for the 2026 Congressional App Challenge, IL-15.</p>
       </div>
       <div class="footer-notes">
-        <p>Program details and hours change. <span class="footer-alert">Always call ahead.</span></p>
+        <p>Program details and hours change. <span class="footer-alert">Always call ahead!</span></p>
         <p>Informational only. Not affiliated with any internet provider or government agency.</p>
       </div>
     </div>
@@ -2870,7 +3024,7 @@
         benefits: checked.filter(v => BENEFITS[v]),
         benefitsStatus: checked.includes("unknown") ? "unknown"
           : checked.includes("none") ? "none"
-          : checked.length ? "some" : "unanswered"
+            : checked.length ? "some" : "unanswered"
       };
     }
 
@@ -3154,7 +3308,7 @@
 
     /* ---------- PWA service worker (lets the app open offline) ---------- */
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").catch(() => {});
+      navigator.serviceWorker.register("sw.js").catch(() => { });
     }
   </script>
 </body>

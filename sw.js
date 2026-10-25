@@ -3,7 +3,7 @@
 //
 // Network first: when online, people always get the latest version and the
 // saved copy is refreshed. The saved copy is only used when the network fails.
-const CACHE = "stl-nav-v10";
+const CACHE = "bridgestl-v11";
 const ASSETS = [
   "./", "./index.html", "./manifest.json", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/bridgestl-logo.png",
   "./fonts/public-sans-latin-wght-normal.woff2", "./fonts/public-sans-latin-wght-italic.woff2"
