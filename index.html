@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>STL Digital Navigator</title>
+  <title>BridgeSTL</title>
   <meta name="description"
     content="Free and low-cost internet, devices, and tech help across St. Louis City, St. Louis County, and the Metro East.">
 
@@ -15,13 +15,31 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="STL Navigator">
+  <meta name="apple-mobile-web-app-title" content="BridgeSTL">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <!-- =============================================================== -->
 
-  <!-- No web fonts or CDNs on purpose: the page needs nothing from the network to draw. -->
+  <!-- No CDNs on purpose: the page needs nothing from the network to draw.
+       Public Sans (the U.S. Web Design System typeface, SIL Open Font License)
+       is bundled in fonts/ and cached by the service worker. -->
 
   <style>
+    @font-face {
+      font-family: "Public Sans";
+      src: url("fonts/public-sans-latin-wght-normal.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Public Sans";
+      src: url("fonts/public-sans-latin-wght-italic.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
+
     :root {
       --bg: #F5F7FA;
       --surface: #FFFFFF;
@@ -32,6 +50,7 @@
       --accent: #2563EB;
       --accent-strong: #1D4ED8;
       --accent-soft: #EAF1FE;
+      --stripe: #EAEDF1;
 
       /* Map */
       --map-land: #E9EDF2;
@@ -44,7 +63,7 @@
       --water-text: #3F6E99;
       --pin: #17212B;
 
-      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -64,12 +83,15 @@
       font-family: var(--font);
       font-size: 1rem;
       font-weight: 400;
-      line-height: 1.55;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      padding-bottom: var(--safe-bottom);
+      /* Column layout keeps the footer at the bottom on short pages */
+      display: flex;
+      flex-direction: column;
     }
 
     :focus-visible {
@@ -108,10 +130,16 @@
       gap: 0 24px;
     }
 
+    /* Full logo in the top bar; it links back to Home */
     .app-name {
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 12px 0;
+      display: block;
+      padding: 8px 0;
+    }
+
+    .app-name svg {
+      display: block;
+      height: 64px;
+      width: auto;
     }
 
     nav {
@@ -144,7 +172,11 @@
 
     @media (max-width: 599px) {
       .app-name {
-        padding: 10px 0 0;
+        padding: 8px 0 0;
+      }
+
+      .app-name svg {
+        height: 52px;
       }
 
       nav {
@@ -168,9 +200,11 @@
 
     /* ---------- Page ---------- */
     main {
+      flex: 1 0 auto;
+      width: 100%;
       max-width: 1160px;
       margin: 0 auto;
-      padding: 32px 16px 40px;
+      padding: 32px 16px 48px;
     }
 
     .view {
@@ -191,7 +225,7 @@
       font-size: 1.5rem;
       line-height: 1.25;
       font-weight: 600;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
       margin-bottom: 20px;
     }
 
@@ -203,19 +237,53 @@
       font-size: 1.0625rem;
       line-height: 1.35;
       font-weight: 500;
+      letter-spacing: -0.01em;
     }
 
+    /* Full-width grey band; the content inside lines up with the page column */
     .site-footer {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 20px 16px 32px;
-      border-top: 1px solid var(--border);
+      background: #E4E8ED;
+      border-top: 1px solid #D3D9E0;
       font-size: .875rem;
       color: var(--text-2);
     }
 
-    .site-footer p {
-      max-width: 75ch;
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 28px 16px calc(32px + var(--safe-bottom));
+      display: grid;
+      gap: 16px 48px;
+    }
+
+    /* Side by side only when both note lines fit on one row each;
+       narrower screens stack everything, left-aligned */
+    @media (min-width: 1000px) {
+      .footer-inner {
+        grid-template-columns: 1fr auto;
+        align-items: start;
+      }
+
+      .footer-notes {
+        text-align: right;
+        white-space: nowrap;
+      }
+    }
+
+    .footer-alert {
+      color: var(--accent-strong);
+      font-weight: 500;
+    }
+
+    .footer-name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: .9375rem;
+      margin-bottom: 2px;
+    }
+
+    .footer-notes p + p {
+      margin-top: 2px;
     }
 
     /* ---------- Home ---------- */
@@ -225,18 +293,27 @@
       margin-bottom: 6px;
     }
 
-    #view-home h2 {
-      font-size: 1.75rem;
-      margin-bottom: 14px;
+    /* Hidden on screen, still read by screen readers */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .purpose {
       max-width: 62ch;
+      margin-bottom: 16px;
     }
 
     .entry-links {
       list-style: none;
-      margin: 28px 0 24px;
+      margin: 0 0 28px;
       border-top: 1px solid var(--border);
     }
 
@@ -283,6 +360,14 @@
       display: block;
       font-weight: 400;
       margin: 0 0 6px;
+    }
+
+    /* The opening question of Get connected */
+    legend.question {
+      font-size: 1.1875rem;
+      font-weight: 500;
+      line-height: 1.35;
+      margin-bottom: 12px;
     }
 
     select,
@@ -404,7 +489,7 @@
 
     #guide-questions,
     #guide-results {
-      scroll-margin-top: 96px;
+      scroll-margin-top: 112px;
     }
 
     .step {
@@ -497,8 +582,7 @@
     }
 
     .res {
-      padding: 24px 0;
-      border-top: 1px solid var(--border);
+      padding: 24px 16px;
     }
 
     .res-kind {
@@ -722,7 +806,7 @@
 
       .help-map {
         position: sticky;
-        top: 76px;
+        top: 104px;
       }
     }
 
@@ -874,6 +958,38 @@
       padding-bottom: 8px;
     }
 
+    /* "Use my location" sits above the area dropdown */
+    .locate {
+      margin-bottom: 16px;
+    }
+
+    .locate[hidden] {
+      display: none;
+    }
+
+    .locate-btn {
+      color: var(--accent-strong);
+      border-color: var(--accent);
+      font-weight: 500;
+    }
+
+    .locate-btn:hover {
+      background: var(--accent-soft);
+    }
+
+    .locate-status {
+      margin-top: 8px;
+      font-size: .9375rem;
+    }
+
+    .locate-status:empty {
+      display: none;
+    }
+
+    .locate .step-hint {
+      margin: 6px 0 0;
+    }
+
     .filter-label {
       margin: 16px 0 6px;
     }
@@ -937,13 +1053,19 @@
     }
 
     .site {
-      padding: 20px 0;
-      border-top: 1px solid var(--border);
+      padding: 20px 16px;
       transition: background-color .3s ease;
-      scroll-margin-top: 96px;
+      scroll-margin-top: 112px;
     }
 
-    .site.flash {
+    /* Alternating rows: every other listing sits on a slightly darker grey
+       so neighboring entries are easy to tell apart */
+    #site-list .site:nth-of-type(even),
+    .res-list .res:nth-of-type(even) {
+      background: var(--stripe);
+    }
+
+    #site-list .site.flash {
       background: var(--accent-soft);
     }
 
@@ -989,7 +1111,11 @@
 
   <header>
     <div class="topbar">
-      <span class="app-name">STL Digital Navigator</span>
+      <a class="app-name" href="#view-home" data-go="view-home">
+        <svg role="img" aria-label="BridgeSTL home" viewBox="222 240 816 802">
+          <image href="icons/bridgestl-logo.png" width="1254" height="1254"></image>
+        </svg>
+      </a>
       <nav aria-label="Main">
         <button class="active" data-view="view-home" aria-current="page">Home</button>
         <button data-view="view-guide">Get connected</button>
@@ -1002,11 +1128,8 @@
 
     <!-- ============ HOME ============ -->
     <section class="view active narrow" id="view-home">
-      <p class="coverage">St. Louis region &amp; Metro East</p>
-      <h2 tabindex="-1">Computers, affordable internet, and local tech help.</h2>
-      <p class="purpose">STL Digital Navigator puts Missouri and Illinois resources in one place: low-cost and free
-        computers, library device loans, internet discounts, libraries with public computers, and in-person tech help.
-        Each listing links to the organization's official page and shows the date we checked it.</p>
+      <!-- The logo lives in the top bar; this heading is for screen readers -->
+      <h2 class="visually-hidden" tabindex="-1">BridgeSTL home</h2>
 
       <ul class="entry-links">
         <li>
@@ -1015,9 +1138,14 @@
         </li>
         <li>
           <a href="#view-directory" data-go="view-directory">Find computer access or help nearby</a>
-          <p>Libraries and help desks with public computers, Wi-Fi, printing, and in-person help, on a map.</p>
+          <p>Libraries and help desks with public computers, Wi-Fi, printing, and tech help, on a map.</p>
         </li>
       </ul>
+
+      <p class="coverage">St. Louis region &amp; Metro East</p>
+      <p class="purpose">BridgeSTL puts Missouri and Illinois resources in one place: low-cost and free
+        computers, library device loans, internet discounts, libraries with public computers, and tech help.
+        Each listing links to the organization's official page and shows the date we checked it.</p>
 
       <p class="home-note">This site does not take applications or hand out devices. Program details and hours change,
         so call ahead.</p>
@@ -1029,15 +1157,21 @@
 
       <form id="guide-form" novalidate>
         <fieldset class="choice-list" id="need-options">
-          <legend class="fld">Need</legend>
-          <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span class="choice-title">A computer to keep</span><span class="choice-desc">Own a laptop or desktop, free or at low cost</span></span></label>
-          <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">A device to borrow</span><span class="choice-desc">Check out a laptop or hotspot for a few weeks</span></span></label>
-          <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span class="choice-title">Home internet</span><span class="choice-desc">A discount or a low-cost monthly plan</span></span></label>
+          <legend class="fld question">What's keeping you from getting connected?</legend>
+          <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span class="choice-title">I don't have a computer</span><span class="choice-desc">Get one to keep, free or at low cost</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">I need a laptop or hotspot for a while</span><span class="choice-desc">Borrow one for a few weeks</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span class="choice-title">Home internet costs too much</span><span class="choice-desc">Find a discount or a low-cost monthly plan</span></span></label>
         </fieldset>
 
         <div id="guide-questions" hidden>
           <div class="step">
-            <label class="fld" for="q-area">Location</label>
+            <div class="locate">
+              <p class="fld">Your location</p>
+              <button class="opt locate-btn" type="button" id="g-locate">Use my location</button>
+              <p class="locate-status" id="g-locate-status" aria-live="polite"></p>
+              <p class="step-hint">Your location stays on this device. It's only used to pick your area.</p>
+            </div>
+            <label class="fld" for="q-area">Or choose your area</label>
             <select id="q-area">
               <option value="">Select a location</option>
               <option value="city">St. Louis City</option>
@@ -1124,13 +1258,19 @@
               aria-label="Map of the St. Louis region. Choose one of six areas."></svg>
             <button id="map-reset" type="button" hidden>Zoom out</button>
           </div>
-          <p class="map-note">Select an area to zoom in. Borders drawn from real latitude and longitude points, simplified.
-            Dashed line: Delmar Blvd, the city's historic north/south divide. Dots are help sites.</p>
+          <p class="map-note">Each dot is a help site. Hover over a dot to see its name, or click it to jump to its
+            listing. Click an area to zoom in. Dashed line: Delmar Blvd.</p>
         </div>
 
         <div class="help-results">
           <div class="filter-block">
-            <label class="fld" for="nearby-area">Location</label>
+            <div class="locate">
+              <p class="fld">Your location</p>
+              <button class="opt locate-btn" type="button" id="nearby-locate">Use my location</button>
+              <p class="locate-status" id="nearby-locate-status" aria-live="polite"></p>
+              <p class="step-hint">Your location stays on this device. It's only used to zoom to your area.</p>
+            </div>
+            <label class="fld" for="nearby-area">Or choose an area</label>
             <select id="nearby-area">
               <option value="all">All areas</option>
               <optgroup label="Missouri">
@@ -1151,7 +1291,7 @@
               <button class="chip" type="button" data-need="public-computer" aria-pressed="false">Public computers</button>
               <button class="chip" type="button" data-need="wifi" aria-pressed="false">Free Wi-Fi</button>
               <button class="chip" type="button" data-need="printing" aria-pressed="false">Printing</button>
-              <button class="chip" type="button" data-need="navigator" aria-pressed="false">In-person help</button>
+              <button class="chip" type="button" data-need="navigator" aria-pressed="false">Tech help</button>
             </div>
             <p class="filter-aside">Need a laptop or hotspot to take home? <a href="#view-guide" data-go="view-guide">Get connected</a> lists device loans.</p>
           </div>
@@ -1172,8 +1312,16 @@
   </main>
 
   <footer class="site-footer">
-    <p>Built for the 2026 Congressional App Challenge, IL-15. Program details and hours change. Always call ahead.
-      This tool is informational and is not affiliated with any internet provider or government agency.</p>
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">BridgeSTL</p>
+        <p>Built for the 2026 Congressional App Challenge, IL-15.</p>
+      </div>
+      <div class="footer-notes">
+        <p>Program details and hours change. <span class="footer-alert">Always call ahead.</span></p>
+        <p>Informational only. Not affiliated with any internet provider or government agency.</p>
+      </div>
+    </div>
   </footer>
 
   <script>
@@ -1189,6 +1337,10 @@
        ================================================================= */
 
     const CHECKED = "2026-10-23";
+
+    // In-person programs (library loans, local classes) only make sense for
+    // people in the four areas BridgeSTL covers, not "Somewhere else".
+    const LOCAL_AREAS = ["city", "county", "madison", "stclair"];
 
     /* 2026 HHS Poverty Guidelines, 48 contiguous states.
        Household of 1 = $15,960. Each additional person adds $5,680.
@@ -1434,7 +1586,7 @@
         title: "Borrow a Chromebook and hotspot kit",
         org: "St. Louis County Library",
         limits: "For St. Louis County Library cardholders 18 and up. 21-day loan, no renewals.",
-        areas: "all",
+        areas: LOCAL_AREAS,
         what: "A kit with a Chromebook and a Wi-Fi hotspot that can connect up to 10 devices at once.",
         qualifies: "St. Louis County Library cardholders aged 18 and up with an established card in good standing. Residency rules for kits are not listed on this page.",
         cost: "Free to borrow. Late returns or missing parts are assessed significant fees; the page does not list amounts.",
@@ -1467,7 +1619,7 @@
         title: "Borrow a Wi-Fi hotspot",
         org: "St. Louis County Library",
         limits: "For adult cardholders in good standing. $250 fee if lost or damaged.",
-        areas: "all",
+        areas: LOCAL_AREAS,
         what: "A Wi-Fi hotspot to use at home. Hotspots are available for checkout at all locations.",
         qualifies: "Adult cardholders in good standing.",
         cost: "Free to borrow. If lost or damaged, a $250 fee is charged. At 14 days overdue, a $100 replacement cost appears on your account.",
@@ -1494,7 +1646,7 @@
         title: "Borrow a Chromebook and hotspot kit",
         org: "University City Public Library",
         limits: "Requires an adult University City library card and a signed form.",
-        areas: "all",
+        areas: LOCAL_AREAS,
         what: "Chromebook and mobile hotspot kits you can check out for up to three weeks at a time.",
         qualifies: "An adult library card and a signed form. Residency rules are not listed on this page.",
         cost: "Fees are not listed on this page.",
@@ -1644,7 +1796,7 @@
         title: "Earn-A-Computer class for kids and teens",
         org: "St. Louis BWorks (nonprofit), Soulard, St. Louis City",
         limits: "Only for students ages 8 to 17. A parent registers. Up to two children per household, and classes are capped at 12 students.",
-        areas: "all",
+        areas: LOCAL_AREAS,
         what: "A free, hands-on class. Students take home a refurbished computer system at the end of six class sessions. The computer runs Linux, not Windows or Mac OS.",
         qualifies: "Students ages 8 to 17 who attend all six sessions. Up to two children from one household can join a class. No income or residency rule is stated.",
         cost: "Free. All BWorks classes are free for students.",
@@ -2170,7 +2322,7 @@
       "device-loan": "Device loans",
       "printing": "Printing",
       "public-computer": "Public computers",
-      "navigator": "In-person help",
+      "navigator": "Tech help",
       "wifi": "Free Wi-Fi"
     };
 
@@ -2470,7 +2622,7 @@
       if (access && access.book) actions.push(access.book);
       if (s.phone) actions.push({ label: "Call this location", tel: s.phone });
       if (s.verified) actions.push({ label: "Get directions", directions: s.addr });
-      const sources = s.page ? [s.page, ...(access ? access.sources : [])] : [];
+      const sources = s.page ? [...new Set([s.page, ...(access ? access.sources : [])])] : [];
       return `<article class="site" data-id="${s.id}">
         <h3>${s.name}</h3>
         <p class="addr">${s.addr}</p>
@@ -2583,6 +2735,20 @@
       if (areaSelect.value === "all") resetMap(); else selectDistrict(areaSelect.value);
     });
 
+    // "Use my location" zooms the map straight to the person's area
+    document.getElementById("nearby-locate").addEventListener("click", () => {
+      const status = document.getElementById("nearby-locate-status");
+      locateDistrict(status, district => {
+        if (district) {
+          selectDistrict(district.id);
+          status.textContent = `Found you in ${district.name}. Showing places there.`;
+        } else {
+          resetMap();
+          status.textContent = `${OUT_OF_RANGE} Showing the whole region.`;
+        }
+      });
+    });
+
     // Tapping a dot zooms to its area (if needed) and highlights its listing
     function showPlace(id) {
       const place = RESOURCE_BY_ID[id];
@@ -2614,6 +2780,63 @@
     document.getElementById("site-list").addEventListener("click", e => {
       if (e.target.closest("[data-show-all]")) resetMap();
     });
+
+    /* =================================================================
+       USE MY LOCATION
+       The browser hands over a latitude/longitude, and the app checks
+       which of the six map areas contains it, entirely on this device.
+       Nothing is sent anywhere.
+       ================================================================= */
+    function pointInPolygon([x, y], poly) {
+      let inside = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const [xi, yi] = poly[i], [xj, yj] = poly[j];
+        if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    }
+
+    const AREA_OF_DISTRICT = {
+      "city-north": "city", "city-south": "city",
+      "county-north": "county", "county-central": "county",
+      madison: "madison", stclair: "stclair"
+    };
+
+    function districtAt(lon, lat) {
+      const hit = DISTRICTS.find(d => pointInPolygon([lon, lat], d.outline));
+      if (hit) return hit;
+      // The map frame cuts off the eastern parts of Madison and St. Clair
+      // counties. Rough extents (approximate, not surveyed borders) keep
+      // residents there from being told they're out of range.
+      if (lon > MAP.east && lon < -89.59) {
+        if (lat >= 38.63 && lat <= 39.03) return DISTRICT_BY_ID.madison;
+        if (lat >= 38.23 && lat < 38.63) return DISTRICT_BY_ID.stclair;
+      }
+      if (lon > -90.25 && lon < MAP.east && lat > MAP.north && lat <= 39.03) return DISTRICT_BY_ID.madison;
+      if (lon > -90.3 && lon < MAP.east && lat < MAP.south && lat >= 38.23) return DISTRICT_BY_ID.stclair;
+      return null;
+    }
+
+    const OUT_OF_RANGE = "You look to be outside the area BridgeSTL covers (St. Louis City, St. Louis County, and Madison and St. Clair counties in Illinois), so you may be too far away for these local listings.";
+
+    // Asks the browser for a position, then calls onFound(district or null)
+    function locateDistrict(status, onFound) {
+      status.textContent = "Finding your location…";
+      navigator.geolocation.getCurrentPosition(
+        pos => onFound(districtAt(pos.coords.longitude, pos.coords.latitude)),
+        err => {
+          status.textContent = err.code === err.PERMISSION_DENIED
+            ? "Location access is turned off. Choose your area below instead."
+            : "We couldn't find your location. Choose your area below instead.";
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      );
+    }
+
+    // Hide the buttons where the browser can't share a location
+    if (!("geolocation" in navigator)) {
+      document.querySelectorAll(".locate").forEach(el => { el.hidden = true; });
+    }
 
     /* =================================================================
        GET CONNECTED
@@ -2752,6 +2975,9 @@
         if (a.area === "madison" || a.area === "stclair") {
           notes.push("We could not confirm laptop or hotspot lending at Metro East libraries from their websites. Call your library to ask. The options below are St. Louis County libraries and need their library cards.");
         }
+        if (a.area === "other") {
+          notes.push("The device loans we list are from St. Louis-area libraries and need their library cards. Ask your own local library whether it lends laptops or hotspots.");
+        }
       }
       if (a.need === "internet") {
         notes.push("Each plan is only available where that company serves your address. No official source we checked says whether Lifeline can be combined with these plans, so ask the company before you sign up.");
@@ -2763,7 +2989,11 @@
     }
 
     function alternativesBlock(a, prominent) {
-      const buttons = ALTERNATIVES[a.need].map(alt => alt.need
+      // Outside the covered area, skip fallbacks that lead to St. Louis-only
+      // listings (Nearby help, library loans)
+      const alts = ALTERNATIVES[a.need].filter(alt => a.area !== "other" || (alt.need && alt.need !== "borrow"));
+      if (!alts.length) return "";
+      const buttons = alts.map(alt => alt.need
         ? `<button class="opt" type="button" data-switch-need="${alt.need}">${alt.label}</button>`
         : `<button class="opt" type="button" data-go-nearby="${alt.nearby}">${alt.label}</button>`).join("");
       return `<section class="alts${prominent ? " prominent" : ""}">
@@ -2793,7 +3023,7 @@
 
       let html = `<div class="results-head">
         <h3>Options for ${NEED_TITLES[a.need]}${a.area === "other" ? "" : ` in ${AREA_NAMES[a.area]}`}</h3>
-        <p class="results-note">STL Digital Navigator does not take applications or hand out devices. Links marked "new tab" open the organization's own website.</p>
+        <p class="results-note">BridgeSTL does not take applications or hand out devices. Links marked "new tab" open the organization's own website.</p>
       </div>`;
       html += guideNotices(a);
       html += `<div class="res-list">${likely.map(resourceCard).join("")}</div>`;
@@ -2820,6 +3050,18 @@
     document.getElementById("need-options").addEventListener("change", e => {
       if (e.target.name === "guide-need") setGuideNeed(e.target.value);
     });
+    document.getElementById("g-locate").addEventListener("click", () => {
+      const status = document.getElementById("g-locate-status");
+      locateDistrict(status, district => {
+        const select = document.getElementById("q-area");
+        select.value = district ? AREA_OF_DISTRICT[district.id] : "other";
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        status.textContent = district
+          ? `Found you in ${district.name}. You can change it below.`
+          : `${OUT_OF_RANGE} We've set your area to "Somewhere else."`;
+      });
+    });
+
     document.getElementById("q-area").addEventListener("change", e => {
       guide.area = e.target.value || null;
       renderGuide();

@@ -1,4 +1,4 @@
-# STL Digital Navigator
+# BridgeSTL
 
 A mobile-first web app connecting households in St. Louis City, North County, and the Metro East (Illinois) to free and low-cost internet, devices, and in-person tech help.
 

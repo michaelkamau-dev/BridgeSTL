@@ -1,6 +1,6 @@
 {
-  "name": "STL Digital Navigator",
-  "short_name": "STL Navigator",
+  "name": "BridgeSTL",
+  "short_name": "BridgeSTL",
   "description": "Free and low-cost internet, devices, and tech help across St. Louis City, North County, and the Metro East.",
   "start_url": "./",
   "scope": "./",
