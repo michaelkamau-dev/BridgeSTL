@@ -8,7 +8,7 @@ Built for the 2026 Congressional App Challenge, Illinois 15th District.
 
 ## Why this exists
 
-Roughly 1 in 4 households in the region gets online with a smartphone only. The City of St. Louis runs a strong digital inclusion program (ConnectSTL, Learning Labs, Digital Navigators), but it stops at the city line. North County and the Metro East, including East St. Louis, have no equivalent single front door. And since the federal Affordable Connectivity Program ended in 2024, figuring out which surviving discount programs a family qualifies for means reading three different provider websites.
+The City of St. Louis runs a strong digital inclusion program (ConnectSTL, Learning Labs, Digital Navigators), but it stops at the city line. North County and the Metro East, including East St. Louis, have no equivalent single front door. And since the federal Affordable Connectivity Program ended in 2024, figuring out which surviving discount programs a family qualifies for means reading three different provider websites.
 
 The app has three sections:
 
