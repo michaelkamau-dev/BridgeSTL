@@ -17,6 +17,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="BridgeSTL">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <!-- =============================================================== -->
 
   <!-- No CDNs on purpose: the page needs nothing from the network to draw.
@@ -457,6 +458,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .home-action,
       .action-arrow {
         transition: none;
@@ -918,7 +920,7 @@
       word-break: break-all;
     }
 
-    /* ---------- Nearby help: map left, places right ---------- */
+    /* ---------- Nearby Resources: map left, places right ---------- */
     .help-layout {
       display: grid;
       gap: 24px;
@@ -1249,7 +1251,7 @@
       <nav aria-label="Main">
         <button class="active" data-view="view-home" aria-current="page">Home</button>
         <button data-view="view-guide">Get connected</button>
-        <button data-view="view-directory">Nearby help</button>
+        <button data-view="view-directory">Nearby Resources</button>
       </nav>
     </div>
   </header>
@@ -1261,7 +1263,7 @@
       <div class="home-main">
         <div class="home-intro">
           <p class="eyebrow">St. Louis &amp; Metro East</p>
-          <h2 tabindex="-1">Get connected. Stay connected.</h2>
+          <h2 tabindex="-1">Get connected, and stay connected.</h2>
           <p class="lede">Find a computer, affordable home internet, or a place nearby to get online.</p>
         </div>
 
@@ -1270,25 +1272,25 @@
             <span class="action-title">Get a device or home internet</span>
             <span class="action-desc">Explore computers to keep, devices to borrow, and internet programs.</span>
             <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="square" />
             </svg>
           </a>
           <a class="home-action" href="#view-directory" data-go="view-directory">
             <span class="action-title">Find help nearby</span>
             <span class="action-desc">Locate public computers, Wi-Fi, printing, and in-person assistance.</span>
             <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+              <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="square" />
             </svg>
           </a>
         </div>
       </div>
 
       <section class="home-about" aria-labelledby="home-about-heading">
-        <h3 id="home-about-heading">Local options. Clear next steps.</h3>
-        <div>
-          <p>BridgeSTL brings Missouri and Illinois resources together so you can review requirements and follow
-            official application links.</p>
-          <p class="home-fine">Applications are completed with the organizations listed.</p>
+        <p>BridgeSTL brings Missouri and Illinois resources together so you can review requirements and follow
+          official application links.</p>
+        <p class="home-fine">Applications are completed with the organizations listed.</p>
         </div>
       </section>
     </section>
@@ -1399,9 +1401,9 @@
       <div id="guide-results" aria-live="polite"></div>
     </section>
 
-    <!-- ============ NEARBY HELP: map + places ============ -->
+    <!-- ============ NEARBY Resources: map + places ============ -->
     <section class="view" id="view-directory">
-      <h2 tabindex="-1">Nearby help</h2>
+      <h2 tabindex="-1">Nearby Resources</h2>
 
       <div class="help-layout">
         <div class="help-map">
@@ -2757,7 +2759,7 @@
     const uniqueById = list => list.filter((r, i) => list.findIndex(x => x.id === r.id) === i);
 
     /* =================================================================
-       NEARBY HELP: map + location and service filters
+       Nearby Resources: map + location and service filters
        Places only. One function decides which places to show.
        ================================================================= */
     function filterPlaces(places, district, need) {
@@ -3004,7 +3006,7 @@
     const NEED_TITLES = {
       computer: "a computer to keep", borrow: "a device to borrow", internet: "internet at home"
     };
-    // Relevant fallbacks: another need in this section, or a service filter in Nearby help
+    // Relevant fallbacks: another need in this section, or a service filter in Nearby Resources
     const ALTERNATIVES = {
       computer: [{ need: "borrow", label: "Borrow a laptop for a few weeks" }, { nearby: "public-computer", label: "Use a public computer nearby" }],
       borrow: [{ need: "computer", label: "Get a computer to keep" }, { nearby: "public-computer", label: "Use a public computer nearby" }],
@@ -3144,7 +3146,7 @@
 
     function alternativesBlock(a, prominent) {
       // Outside the covered area, skip fallbacks that lead to St. Louis-only
-      // listings (Nearby help, library loans)
+      // listings (Nearby Resources, library loans)
       const alts = ALTERNATIVES[a.need].filter(alt => a.area !== "other" || (alt.need && alt.need !== "borrow"));
       if (!alts.length) return "";
       const buttons = alts.map(alt => alt.need
@@ -3273,7 +3275,7 @@
     });
 
     /* =================================================================
-       NAVIGATION: Home, Get connected, Nearby help
+       NAVIGATION: Home, Get connected, Nearby Resources
        ================================================================= */
     function showView(id) {
       document.querySelectorAll("nav button").forEach(b => {
