@@ -32,7 +32,6 @@
       --accent: #2563EB;
       --accent-strong: #1D4ED8;
       --accent-soft: #EAF1FE;
-      --radius: 2px;
 
       /* Map */
       --map-land: #E9EDF2;
@@ -82,6 +81,15 @@
       color: var(--accent-strong);
     }
 
+    /* Square corners on every control and container */
+    button,
+    input,
+    select,
+    details,
+    summary {
+      border-radius: 0;
+    }
+
     /* ---------- Top bar: app name + plain text navigation ---------- */
     header {
       background: var(--surface);
@@ -117,7 +125,6 @@
       padding: 0 2px;
       border: 0;
       border-bottom: 2px solid transparent;
-      border-radius: 0;
       background: none;
       color: var(--text-2);
       font: inherit;
@@ -137,21 +144,17 @@
 
     @media (max-width: 599px) {
       .app-name {
-        padding: 10px 0 2px;
+        padding: 10px 0 0;
       }
 
       nav {
         width: 100%;
-        gap: 10px;
+        gap: 20px;
       }
 
       nav button {
-        flex: 1 1 0;
-        min-width: 0;
-        padding: 6px 0;
-        font-size: .875rem;
-        line-height: 1.25;
-        text-align: center;
+        min-height: 44px;
+        font-size: .9375rem;
       }
     }
 
@@ -167,7 +170,7 @@
     main {
       max-width: 1160px;
       margin: 0 auto;
-      padding: 28px 16px 48px;
+      padding: 32px 16px 40px;
     }
 
     .view {
@@ -178,7 +181,7 @@
       display: block;
     }
 
-    /* Form views sit in a centered, readable column */
+    /* Home and Get connected sit in a centered, readable column */
     .narrow {
       max-width: 680px;
       margin: 0 auto;
@@ -192,21 +195,84 @@
       margin-bottom: 20px;
     }
 
+    h2:focus {
+      outline: none;
+    }
+
     h3 {
       font-size: 1.0625rem;
       line-height: 1.35;
       font-weight: 500;
     }
 
-    /* ---------- Cards & form ---------- */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
+    .site-footer {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 20px 16px 32px;
+      border-top: 1px solid var(--border);
+      font-size: .875rem;
+      color: var(--text-2);
     }
 
+    .site-footer p {
+      max-width: 75ch;
+    }
+
+    /* ---------- Home ---------- */
+    .coverage {
+      font-size: .875rem;
+      color: var(--text-2);
+      margin-bottom: 6px;
+    }
+
+    #view-home h2 {
+      font-size: 1.75rem;
+      margin-bottom: 14px;
+    }
+
+    .purpose {
+      max-width: 62ch;
+    }
+
+    .entry-links {
+      list-style: none;
+      margin: 28px 0 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .entry-links li {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .entry-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      font-size: 1.125rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .entry-links a::after {
+      content: "\2192";
+      margin-left: 8px;
+    }
+
+    .entry-links a:hover {
+      text-decoration: underline;
+    }
+
+    .entry-links p {
+      color: var(--text-2);
+    }
+
+    .home-note {
+      font-size: .9375rem;
+      color: var(--text-2);
+    }
+
+    /* ---------- Forms ---------- */
     fieldset {
       border: 0;
       min-width: 0;
@@ -216,12 +282,7 @@
     legend.fld {
       display: block;
       font-weight: 400;
-      margin: 20px 0 6px;
-    }
-
-    label.fld:first-child,
-    legend.fld {
-      margin-top: 0;
+      margin: 0 0 6px;
     }
 
     select,
@@ -230,7 +291,6 @@
       min-height: 44px;
       padding: 10px 12px;
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
       background: var(--surface);
       color: var(--text);
       font: inherit;
@@ -271,62 +331,383 @@
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: var(--radius);
       font: inherit;
       font-weight: 500;
       cursor: pointer;
-      margin-top: 20px;
     }
 
     .btn:hover {
       background: var(--accent-strong);
     }
 
-    .form-block fieldset {
-      margin-top: 20px;
+    .choice-list {
+      margin-bottom: 8px;
     }
 
-    .form-block {
-      padding-bottom: 8px;
+    /* Divider goes on the first row, not the fieldset, so the legend stays clear of it */
+    .choice-list legend + .choice {
+      border-top: 1px solid var(--border);
     }
 
-    /* ---------- Matcher results ---------- */
-    #matcher-results {
-      margin-top: 28px;
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      min-height: 56px;
+      padding: 12px 4px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
     }
 
-    .result {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
+    .choice:hover .choice-title {
+      color: var(--accent-strong);
+    }
+
+    .choice input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .choice-title {
+      display: block;
+    }
+
+    .choice input:checked + span .choice-title {
+      font-weight: 500;
+    }
+
+    .choice-desc {
+      display: block;
+      color: var(--text-2);
+      font-size: .9375rem;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 28px;
+    }
+
+    .choice-row .choice {
+      border-bottom: 0;
+      min-height: 44px;
+      padding: 8px 0;
+      align-items: center;
+    }
+
+    .choice-row .choice input {
+      margin-top: 0;
+    }
+
+    #guide-questions,
+    #guide-results {
+      scroll-margin-top: 96px;
+    }
+
+    .step {
+      padding: 20px 0 4px;
+    }
+
+    .step + .step {
+      border-top: 1px solid var(--border);
+    }
+
+    .step:last-child {
+      padding-top: 20px;
+    }
+
+    .step-hint {
+      color: var(--text-2);
+      font-size: .9375rem;
+      margin: -2px 0 10px;
+    }
+
+    .field-row {
+      display: grid;
+      gap: 0 16px;
+    }
+
+    .field-row > div {
       margin-bottom: 12px;
     }
 
-    .result.no {
-      background: transparent;
+    @media (min-width: 640px) {
+      .field-row {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
-    .result .price {
+    .check-grid {
+      display: grid;
+      gap: 0 16px;
+    }
+
+    @media (min-width: 640px) {
+      .check-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .opt {
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: .9375rem;
+      cursor: pointer;
+    }
+
+    .opt:hover {
+      border-color: var(--accent);
+    }
+
+    /* ---------- Get connected results ---------- */
+    .results-head {
+      border-top: 1px solid var(--border-strong);
+      padding-top: 24px;
+      margin: 24px 0 16px;
+    }
+
+    .results-head h3 {
+      font-size: 1.25rem;
+    }
+
+    .results-note {
+      color: var(--text-2);
+      font-size: .9375rem;
+      margin-top: 4px;
+    }
+
+    .notice {
+      border-left: 2px solid var(--border-strong);
+      padding: 2px 0 2px 12px;
+      margin-bottom: 16px;
+      font-size: .9375rem;
+    }
+
+    .res {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .res-kind {
+      font-size: .875rem;
+      color: var(--text-2);
+      margin-bottom: 2px;
+    }
+
+    .res h3 {
+      font-size: 1.1875rem;
+    }
+
+    .res .org {
+      color: var(--text-2);
+      font-size: .9375rem;
+    }
+
+    .res .what {
+      margin-top: 10px;
+    }
+
+    .label {
+      color: var(--text-2);
+      margin-right: 6px;
+    }
+
+    .cost,
+    .limits {
+      margin-top: 8px;
+    }
+
+    .fit {
+      margin-top: 12px;
+      padding: 2px 0 2px 12px;
+      border-left: 2px solid var(--border-strong);
+    }
+
+    .fit.good {
+      border-left-color: var(--accent);
+    }
+
+    .fit-title {
+      font-weight: 500;
+    }
+
+    .fit ul {
+      margin: 2px 0 0 20px;
+    }
+
+    .unconfirmed {
+      color: var(--text-2);
+      font-style: italic;
+    }
+
+    .empty-note {
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-2);
+    }
+
+    .empty-note .opt {
+      margin-top: 12px;
+    }
+
+    .mini-head {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-2);
+      margin: 20px 0 8px;
+    }
+
+    details.more {
+      border-top: 1px solid var(--border);
+    }
+
+    details.more > summary {
+      cursor: pointer;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      color: var(--text-2);
+    }
+
+    .alts {
+      border-top: 1px solid var(--border);
+      padding-top: 4px;
+    }
+
+    /* ---------- Actions ---------- */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 20px;
+      margin-top: 16px;
+    }
+
+    .action {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 44px;
+      line-height: 1.3;
+    }
+
+    .action small {
+      font-size: .8125rem;
+      color: var(--text-2);
+    }
+
+    .action.primary {
+      padding: 8px 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .action.primary small {
+      color: #fff;
+    }
+
+    .action.primary:hover {
+      background: var(--accent-strong);
+    }
+
+    @media (max-width: 479px) {
+      .action.primary {
+        flex: 1 1 100%;
+      }
+    }
+
+    /* ---------- Expandable details ---------- */
+    details.req {
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    details.req > summary {
+      cursor: pointer;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      color: var(--accent-strong);
+    }
+
+    .facts {
+      display: grid;
+      gap: 14px;
+      padding: 4px 0 8px;
+    }
+
+    .facts dt {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .facts dd {
       margin-top: 2px;
     }
 
-    .result p {
-      color: var(--text-2);
-      margin-top: 6px;
+    .facts dd ul {
+      margin: 2px 0 0 20px;
     }
 
-    .result .checked {
+    .steps {
+      margin: 2px 0 0 22px;
+    }
+
+    .steps li {
+      margin-bottom: 6px;
+      padding-left: 2px;
+    }
+
+    .rules {
+      margin: 0 0 10px 20px;
+      font-size: .9375rem;
+    }
+
+    .rules li {
+      margin-bottom: 4px;
+    }
+
+    .res-source {
+      margin-top: 8px;
       font-size: .875rem;
+      color: var(--text-2);
     }
 
-    .stack-note {
-      border-left: 2px solid var(--accent);
-      padding: 2px 0 2px 12px;
-      margin: 16px 0;
+    .res-source p {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
     }
 
-    /* ---------- Find Help: map left, results right ---------- */
+    .all-sources summary {
+      cursor: pointer;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .all-sources ul {
+      margin: 4px 0 0 20px;
+      word-break: break-all;
+    }
+
+    /* ---------- Nearby help: map left, places right ---------- */
     .help-layout {
       display: grid;
       gap: 24px;
@@ -335,7 +716,7 @@
     @media (min-width: 900px) {
       .help-layout {
         grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-        gap: 32px;
+        gap: 40px;
         align-items: start;
       }
 
@@ -349,7 +730,6 @@
       position: relative;
       background: var(--map-land);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
       overflow: hidden;
     }
 
@@ -468,7 +848,6 @@
       min-height: 44px;
       padding: 0 14px;
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
       background: var(--surface);
       color: var(--accent-strong);
       font: inherit;
@@ -491,50 +870,24 @@
       margin-top: 10px;
     }
 
-    .area-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      padding-bottom: 14px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--border);
+    .filter-block {
+      padding-bottom: 8px;
     }
 
-    .area-bar h3 {
-      font-size: 1.1875rem;
-    }
-
-    .area-bar .places {
-      color: var(--text-2);
-      margin-top: 2px;
-    }
-
-    .area-bar .count {
-      color: var(--text-2);
-      white-space: nowrap;
-      padding-top: 3px;
-    }
-
-    /* ---------- Filters ---------- */
     .filter-label {
-      font-size: .9375rem;
-      color: var(--text-2);
-      margin-bottom: 8px;
+      margin: 16px 0 6px;
     }
 
     .filters {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
     }
 
     .chip {
       min-height: 44px;
       padding: 0 14px;
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
       background: var(--surface);
       color: var(--text);
       font: inherit;
@@ -553,51 +906,59 @@
       font-weight: 500;
     }
 
-    /* ---------- Resource cards ---------- */
-    .card-list {
-      display: grid;
+    .filter-aside {
+      margin-top: 12px;
+      font-size: .9375rem;
+      color: var(--text-2);
+    }
+
+    .area-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       gap: 12px;
+      padding: 16px 0 14px;
+      margin-top: 12px;
+      border-top: 1px solid var(--border-strong);
     }
 
-    .card-list>.card {
-      margin: 0;
+    .area-bar h3 {
+      font-size: 1.1875rem;
     }
 
-    @media (min-width: 900px) {
-      #mobile-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .area-bar .places,
+    .area-bar .count {
+      color: var(--text-2);
+    }
+
+    .area-bar .count {
+      white-space: nowrap;
+      padding-top: 3px;
     }
 
     .site {
-      transition: border-color .3s ease, background-color .3s ease;
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      transition: background-color .3s ease;
       scroll-margin-top: 96px;
     }
 
     .site.flash {
-      border-color: var(--accent);
       background: var(--accent-soft);
     }
 
     .site .addr {
-      margin-top: 4px;
-    }
-
-    .site .region-tag {
-      font-size: .875rem;
-      color: var(--text-2);
       margin-top: 2px;
     }
 
+    .site .meta,
     .site .services {
       font-size: .9375rem;
       color: var(--text-2);
-      margin-top: 10px;
     }
 
-    .site .services b {
-      font-weight: 500;
-      color: var(--text);
+    .site .services {
+      margin-top: 6px;
     }
 
     .verify {
@@ -607,396 +968,10 @@
       font-style: italic;
     }
 
-    .rules {
-      margin: 4px 0 0 20px;
-      font-size: .9375rem;
-    }
-
-    .rules li {
-      margin-bottom: 4px;
-    }
-
-    .empty,
-    .empty-card {
-      grid-column: 1 / -1;
-      background: var(--surface);
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      text-align: center;
-      color: var(--text-2);
-    }
-
-    .empty-card strong {
-      display: block;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .disclaimer {
-      font-size: .875rem;
-      color: var(--text-2);
-      margin-top: 24px;
-      max-width: 75ch;
-    }
-
-    /* ---------- Devices & internet guide ---------- */
-    .choice-list {
-      margin-bottom: 8px;
-    }
-
-    /* Divider goes on the first row, not the fieldset, so the legend stays clear of it */
-    .choice-list legend+.choice {
-      border-top: 1px solid var(--border);
-    }
-
-    .choice {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      min-height: 56px;
-      padding: 12px 4px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-    }
-
-    .choice:hover .choice-title {
-      color: var(--accent-strong);
-    }
-
-    .choice input {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .choice-title {
-      display: block;
-    }
-
-    .choice input:checked+span .choice-title {
-      font-weight: 500;
-    }
-
-    .choice-desc {
-      display: block;
-      color: var(--text-2);
-      font-size: .9375rem;
-    }
-
-    .choice-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0 28px;
-    }
-
-    .choice-row .choice {
-      border-bottom: 0;
-      min-height: 44px;
-      padding: 8px 0;
-      align-items: center;
-    }
-
-    .choice-row .choice input {
-      margin-top: 0;
-    }
-
-    #guide-questions {
-      scroll-margin-top: 96px;
-    }
-
-    .step {
+    .list-head {
+      margin: 0;
       padding: 20px 0 4px;
-    }
-
-    .step+.step {
-      border-top: 1px solid var(--border);
-    }
-
-    .step-hint {
-      color: var(--text-2);
-      font-size: .9375rem;
-      margin: -2px 0 10px;
-    }
-
-    .option-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .opt {
-      min-height: 44px;
-      padding: 0 14px;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
-      background: var(--surface);
-      color: var(--text);
-      font: inherit;
-      font-size: .9375rem;
-      cursor: pointer;
-    }
-
-    .opt:hover {
-      border-color: var(--accent);
-    }
-
-    .field-row {
-      display: grid;
-      gap: 0 16px;
-    }
-
-    .field-row label.fld {
-      margin-top: 0;
-    }
-
-    .field-row>div {
-      margin-bottom: 12px;
-    }
-
-    @media (min-width: 640px) {
-      .field-row {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .check-grid {
-      display: grid;
-      gap: 0 16px;
-    }
-
-    @media (min-width: 640px) {
-      .check-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .results-head {
       border-top: 1px solid var(--border-strong);
-      padding-top: 24px;
-      margin: 16px 0 16px;
-    }
-
-    .results-head h3 {
-      font-size: 1.25rem;
-    }
-
-    .results-note {
-      color: var(--text-2);
-      font-size: .9375rem;
-      margin-top: 4px;
-    }
-
-    .notice {
-      border-left: 2px solid var(--border-strong);
-      padding: 2px 0 2px 12px;
-      margin-bottom: 16px;
-      font-size: .9375rem;
-    }
-
-    .res {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 12px;
-    }
-
-    .res-kind {
-      font-size: .875rem;
-      color: var(--text-2);
-      margin-bottom: 4px;
-    }
-
-    .res h3 {
-      font-size: 1.1875rem;
-    }
-
-    .res .org {
-      color: var(--text-2);
-      margin-top: 2px;
-    }
-
-    .fit {
-      margin-top: 14px;
-      padding: 2px 0 2px 12px;
-      border-left: 2px solid var(--border-strong);
-    }
-
-    .fit.good {
-      border-left-color: var(--accent);
-    }
-
-    .fit-title {
-      font-weight: 500;
-    }
-
-    .fit ul {
-      margin: 2px 0 0 20px;
-    }
-
-    .facts {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .facts dt,
-    .mini-head {
-      font-size: .875rem;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-
-    .facts dd {
-      margin-top: 2px;
-    }
-
-    .facts dd ul {
-      margin: 2px 0 0 20px;
-    }
-
-    .unconfirmed {
-      color: var(--text-2);
-      font-style: italic;
-    }
-
-    .mini-head {
-      margin-top: 18px;
-    }
-
-    .steps {
-      margin: 6px 0 0 22px;
-    }
-
-    .steps li {
-      margin-bottom: 6px;
-      padding-left: 2px;
-    }
-
-    .next {
-      margin-top: 12px;
-    }
-
-    .next b {
-      font-weight: 500;
-    }
-
-    .avail {
-      margin-top: 8px;
-      font-weight: 500;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .action {
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 48px;
-      padding: 8px 16px;
-      border-radius: var(--radius);
-      font-weight: 500;
-      text-decoration: none;
-      line-height: 1.3;
-    }
-
-    .action small {
-      font-weight: 400;
-      font-size: .8125rem;
-    }
-
-    .action.primary {
-      background: var(--accent);
-      border: 1px solid var(--accent);
-      color: #fff;
-    }
-
-    .action.primary:hover {
-      background: var(--accent-strong);
-    }
-
-    .action.secondary {
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      color: var(--accent-strong);
-    }
-
-    .action.secondary:hover {
-      border-color: var(--accent);
-    }
-
-    @media (max-width: 479px) {
-      .action {
-        flex: 1 1 100%;
-      }
-    }
-
-    .res-source {
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      font-size: .875rem;
-      color: var(--text-2);
-    }
-
-    .res-source p {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 16px;
-    }
-
-    .all-sources {
-      margin-top: 6px;
-    }
-
-    .all-sources summary {
-      cursor: pointer;
-      min-height: 32px;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .all-sources ul {
-      margin: 4px 0 0 20px;
-      word-break: break-all;
-    }
-
-    .site .res-source {
-      margin-top: 12px;
-    }
-
-    details.more {
-      margin: 8px 0 16px;
-    }
-
-    details.more>summary {
-      cursor: pointer;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      color: var(--text-2);
-    }
-
-    details.more[open]>summary {
-      margin-bottom: 12px;
-    }
-
-    .alts {
-      margin-top: 8px;
-    }
-
-    .alts.prominent {
-      border-top: 1px solid var(--border);
-      padding-top: 4px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1016,149 +991,131 @@
     <div class="topbar">
       <span class="app-name">STL Digital Navigator</span>
       <nav aria-label="Main">
-        <button class="active" data-view="view-guide" aria-current="page">Devices &amp; internet</button>
-        <button data-view="view-matcher">Internet plans</button>
-        <button data-view="view-directory">Local resources</button>
-        <button data-view="view-mobile">Phone access</button>
+        <button class="active" data-view="view-home" aria-current="page">Home</button>
+        <button data-view="view-guide">Get connected</button>
+        <button data-view="view-directory">Nearby help</button>
       </nav>
     </div>
   </header>
 
   <main>
 
-    <!-- ============ VIEW 0: DEVICES & INTERNET (guided) ============ -->
-    <section class="view active narrow" id="view-guide">
-      <h2>Devices &amp; internet</h2>
+    <!-- ============ HOME ============ -->
+    <section class="view active narrow" id="view-home">
+      <p class="coverage">St. Louis region &amp; Metro East</p>
+      <h2 tabindex="-1">Computers, affordable internet, and local tech help.</h2>
+      <p class="purpose">STL Digital Navigator puts Missouri and Illinois resources in one place: low-cost and free
+        computers, library device loans, internet discounts, libraries with public computers, and in-person tech help.
+        Each listing links to the organization's official page and shows the date we checked it.</p>
 
-      <fieldset class="choice-list" id="need-options">
-        <legend class="fld">Need</legend>
-        <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span class="choice-title">A
-              computer to keep</span><span class="choice-desc">Own a laptop or desktop, free or at low
-              cost</span></span></label>
-        <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">A
-              device to borrow</span><span class="choice-desc">Check out a laptop or hotspot for a few
-              weeks</span></span></label>
-        <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span
-              class="choice-title">Internet at home</span><span class="choice-desc">A discount or a low-cost monthly
-              plan</span></span></label>
-        <label class="choice"><input type="radio" name="guide-need" value="today"><span><span
-              class="choice-title">Computer access today</span><span class="choice-desc">Walk in and use a computer or
-              Wi-Fi</span></span></label>
-      </fieldset>
+      <ul class="entry-links">
+        <li>
+          <a href="#view-guide" data-go="view-guide">Get a device or home internet</a>
+          <p>Computers to keep, laptops and hotspots to borrow, and internet discounts, with who qualifies and how to apply.</p>
+        </li>
+        <li>
+          <a href="#view-directory" data-go="view-directory">Find computer access or help nearby</a>
+          <p>Libraries and help desks with public computers, Wi-Fi, printing, and in-person help, on a map.</p>
+        </li>
+      </ul>
 
-      <div id="guide-questions" hidden>
-        <div class="step">
-          <label class="fld" for="q-area">Location</label>
-          <select id="q-area">
-            <option value="">Select a location</option>
-            <option value="city">St. Louis City</option>
-            <option value="county">St. Louis County</option>
-            <option value="madison">Madison County, IL</option>
-            <option value="stclair">St. Clair County, IL</option>
-            <option value="other">Somewhere else</option>
-          </select>
-        </div>
+      <p class="home-note">This site does not take applications or hand out devices. Program details and hours change,
+        so call ahead.</p>
+    </section>
 
-        <div class="step" data-for="borrow" hidden>
-          <fieldset id="q-age">
-            <legend class="fld">Age</legend>
-            <p class="step-hint">The library device loans we found are for adult cardholders.</p>
-            <div class="choice-row">
-              <label class="choice"><input type="radio" name="guide-age" value="yes"><span><span class="choice-title">18
-                    or older</span></span></label>
-              <label class="choice"><input type="radio" name="guide-age" value="no"><span><span
-                    class="choice-title">Under 18</span></span></label>
-            </div>
-          </fieldset>
-        </div>
+    <!-- ============ GET CONNECTED ============ -->
+    <section class="view narrow" id="view-guide">
+      <h2 tabindex="-1">Get connected</h2>
 
-        <div class="step" data-for="computer internet" hidden>
-          <p class="step-hint">Used only on this page to explain what may fit. Nothing is saved or sent anywhere.</p>
-          <div class="field-row">
-            <div>
-              <label class="fld" for="g-hh">Household size</label>
-              <select id="g-hh">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8 or more</option>
-              </select>
-            </div>
-            <div>
-              <label class="fld" for="g-income">Annual household income before taxes</label>
-              <input type="number" id="g-income" inputmode="numeric" placeholder="Example: 32000" min="0">
-            </div>
+      <form id="guide-form" novalidate>
+        <fieldset class="choice-list" id="need-options">
+          <legend class="fld">Need</legend>
+          <label class="choice"><input type="radio" name="guide-need" value="computer"><span><span class="choice-title">A computer to keep</span><span class="choice-desc">Own a laptop or desktop, free or at low cost</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="borrow"><span><span class="choice-title">A device to borrow</span><span class="choice-desc">Check out a laptop or hotspot for a few weeks</span></span></label>
+          <label class="choice"><input type="radio" name="guide-need" value="internet"><span><span class="choice-title">Home internet</span><span class="choice-desc">A discount or a low-cost monthly plan</span></span></label>
+        </fieldset>
+
+        <div id="guide-questions" hidden>
+          <div class="step">
+            <label class="fld" for="q-area">Location</label>
+            <select id="q-area">
+              <option value="">Select a location</option>
+              <option value="city">St. Louis City</option>
+              <option value="county">St. Louis County</option>
+              <option value="madison">Madison County, IL</option>
+              <option value="stclair">St. Clair County, IL</option>
+              <option value="other">Somewhere else</option>
+            </select>
           </div>
-          <label class="check-row"><input type="checkbox" id="g-income-unknown"> I don't know or prefer not to
-            say</label>
-        </div>
 
-        <div class="step" data-for="computer internet" hidden>
-          <fieldset>
-            <legend class="fld" id="q-ben-label">Benefits anyone in your household receives</legend>
-            <div class="check-grid" id="g-benefits" role="group" aria-labelledby="q-ben-label">
-              <label class="check-row"><input type="checkbox" value="snap"> SNAP (food stamps / EBT)</label>
-              <label class="check-row"><input type="checkbox" value="medicaid"> Medicaid</label>
-              <label class="check-row"><input type="checkbox" value="ssi"> SSI (Supplemental Security Income)</label>
-              <label class="check-row"><input type="checkbox" value="nslp"> Free or reduced-price school lunch</label>
-              <label class="check-row"><input type="checkbox" value="wic"> WIC</label>
-              <label class="check-row"><input type="checkbox" value="tanf"> TANF (cash assistance)</label>
-              <label class="check-row"><input type="checkbox" value="liheap"> LIHEAP (energy assistance)</label>
-              <label class="check-row"><input type="checkbox" value="housing"> Section 8 or public housing</label>
-              <label class="check-row"><input type="checkbox" value="pell"> Federal Pell Grant</label>
-              <label class="check-row"><input type="checkbox" value="vet"> Veterans Pension or Survivors Benefit</label>
-              <label class="check-row"><input type="checkbox" value="headstart"> Head Start</label>
-              <label class="check-row"><input type="checkbox" value="none"> None of these</label>
-              <label class="check-row"><input type="checkbox" value="unknown"> I don't know</label>
+          <div class="step" data-for="borrow" hidden>
+            <fieldset id="q-age">
+              <legend class="fld">Age</legend>
+              <p class="step-hint">The library device loans we found are for adult cardholders.</p>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="guide-age" value="yes"><span><span class="choice-title">18 or older</span></span></label>
+                <label class="choice"><input type="radio" name="guide-age" value="no"><span><span class="choice-title">Under 18</span></span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="step" data-for="computer internet" hidden>
+            <p class="step-hint">Used only on this page to explain what may fit. Nothing is saved or sent anywhere.</p>
+            <div class="field-row">
+              <div>
+                <label class="fld" for="g-hh">Household size</label>
+                <select id="g-hh">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3" selected>3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8 or more</option>
+                </select>
+              </div>
+              <div>
+                <label class="fld" for="g-income">Annual household income before taxes</label>
+                <input type="number" id="g-income" inputmode="numeric" placeholder="Example: 32000" min="0">
+              </div>
             </div>
-          </fieldset>
+            <label class="check-row"><input type="checkbox" id="g-income-unknown"> I don't know or prefer not to say</label>
+          </div>
+
+          <div class="step" data-for="computer internet" hidden>
+            <fieldset>
+              <legend class="fld" id="q-ben-label">Benefits anyone in your household receives</legend>
+              <div class="check-grid" id="g-benefits" role="group" aria-labelledby="q-ben-label">
+                <label class="check-row"><input type="checkbox" value="snap"> SNAP (food stamps / EBT)</label>
+                <label class="check-row"><input type="checkbox" value="medicaid"> Medicaid</label>
+                <label class="check-row"><input type="checkbox" value="ssi"> SSI (Supplemental Security Income)</label>
+                <label class="check-row"><input type="checkbox" value="nslp"> Free or reduced-price school lunch</label>
+                <label class="check-row"><input type="checkbox" value="wic"> WIC</label>
+                <label class="check-row"><input type="checkbox" value="tanf"> TANF (cash assistance)</label>
+                <label class="check-row"><input type="checkbox" value="liheap"> LIHEAP (energy assistance)</label>
+                <label class="check-row"><input type="checkbox" value="housing"> Section 8 or public housing</label>
+                <label class="check-row"><input type="checkbox" value="pell"> Federal Pell Grant</label>
+                <label class="check-row"><input type="checkbox" value="vet"> Veterans Pension or Survivors Benefit</label>
+                <label class="check-row"><input type="checkbox" value="headstart"> Head Start</label>
+                <label class="check-row"><input type="checkbox" value="none"> None of these</label>
+                <label class="check-row"><input type="checkbox" value="unknown"> I don't know</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="step">
+            <button class="btn" type="submit" id="guide-submit">Show options</button>
+          </div>
         </div>
-      </div>
+      </form>
 
       <div id="guide-results" aria-live="polite"></div>
     </section>
 
-    <!-- ============ VIEW 1: INTERNET PLANS (matcher) ============ -->
-    <section class="view narrow" id="view-matcher">
-      <h2>Internet plans</h2>
-
-      <div class="form-block">
-        <label class="fld" for="hh">Household size</label>
-        <select id="hh">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8 or more</option>
-        </select>
-
-        <label class="fld" for="income">Annual household income before taxes</label>
-        <input type="number" id="income" inputmode="numeric" placeholder="Example: 32000" min="0">
-
-        <fieldset>
-          <legend class="fld">Benefits (check all that apply)</legend>
-          <label class="check-row"><input type="checkbox" id="b-snap"> SNAP (food stamps / EBT)</label>
-          <label class="check-row"><input type="checkbox" id="b-nslp"> Free or reduced school lunch (NSLP)</label>
-          <label class="check-row"><input type="checkbox" id="b-medicaid"> Medicaid</label>
-          <label class="check-row"><input type="checkbox" id="b-ssi"> SSI (Supplemental Security Income)</label>
-        </fieldset>
-
-        <button class="btn" id="run-matcher">Check my options</button>
-      </div>
-
-      <div id="matcher-results"></div>
-    </section>
-
-    <!-- ============ VIEW 2: LOCAL RESOURCES (map + directory) ============ -->
+    <!-- ============ NEARBY HELP: map + places ============ -->
     <section class="view" id="view-directory">
-      <h2>Local resources</h2>
+      <h2 tabindex="-1">Nearby help</h2>
 
       <div class="help-layout">
         <div class="help-map">
@@ -1167,56 +1124,57 @@
               aria-label="Map of the St. Louis region. Choose one of six areas."></svg>
             <button id="map-reset" type="button" hidden>Zoom out</button>
           </div>
-          <p class="map-note">Select an area to zoom in. Borders drawn from real latitude and longitude points,
-            simplified.
+          <p class="map-note">Select an area to zoom in. Borders drawn from real latitude and longitude points, simplified.
             Dashed line: Delmar Blvd, the city's historic north/south divide. Dots are help sites.</p>
         </div>
 
         <div class="help-results">
+          <div class="filter-block">
+            <label class="fld" for="nearby-area">Location</label>
+            <select id="nearby-area">
+              <option value="all">All areas</option>
+              <optgroup label="Missouri">
+                <option value="city-north">North City</option>
+                <option value="city-south">Central &amp; South City</option>
+                <option value="county-north">North St. Louis County</option>
+                <option value="county-central">Central, West &amp; South County</option>
+              </optgroup>
+              <optgroup label="Illinois">
+                <option value="madison">Madison County, IL</option>
+                <option value="stclair">St. Clair County, IL</option>
+              </optgroup>
+            </select>
+
+            <p class="filter-label" id="amenity-label">Service</p>
+            <div class="filters" id="amenity-filters" role="group" aria-labelledby="amenity-label">
+              <button class="chip on" type="button" data-need="all" aria-pressed="true">All services</button>
+              <button class="chip" type="button" data-need="public-computer" aria-pressed="false">Public computers</button>
+              <button class="chip" type="button" data-need="wifi" aria-pressed="false">Free Wi-Fi</button>
+              <button class="chip" type="button" data-need="printing" aria-pressed="false">Printing</button>
+              <button class="chip" type="button" data-need="navigator" aria-pressed="false">In-person help</button>
+            </div>
+            <p class="filter-aside">Need a laptop or hotspot to take home? <a href="#view-guide" data-go="view-guide">Get connected</a> lists device loans.</p>
+          </div>
+
           <div class="area-bar">
             <div>
               <h3 id="area-name">Whole region</h3>
-              <div class="places" id="area-places">Six areas across Missouri and Illinois</div>
+              <p class="places" id="area-places">Six areas across Missouri and Illinois</p>
             </div>
             <span class="count" id="area-count" aria-live="polite"></span>
           </div>
 
-          <p class="filter-label" id="amenity-label">Show places with</p>
-          <div class="filters" id="amenity-filters" role="group" aria-labelledby="amenity-label">
-            <button class="chip on" data-need="all">Everything</button>
-            <button class="chip" data-need="public-computer">Public computers</button>
-            <button class="chip" data-need="wifi">Free Wi-Fi</button>
-            <button class="chip" data-need="navigator">In-person help</button>
-            <button class="chip" data-need="printing">Printing</button>
-            <button class="chip" data-need="device-loan">Device loans</button>
-          </div>
-
-          <div id="site-list" class="card-list"></div>
+          <div id="site-list"></div>
         </div>
       </div>
     </section>
 
-    <!-- ============ VIEW 3: PHONE ACCESS ============ -->
-    <section class="view" id="view-mobile">
-      <h2>Phone access</h2>
-
-      <p class="filter-label" id="need-label">I need to</p>
-      <div class="filters" id="need-filters" role="group" aria-labelledby="need-label">
-        <button class="chip on" data-need="all">Everything</button>
-        <button class="chip" data-need="device-loan">Borrow a device</button>
-        <button class="chip" data-need="printing">Print something</button>
-        <button class="chip" data-need="public-computer">Use a computer</button>
-        <button class="chip" data-need="navigator">Talk to a person</button>
-      </div>
-
-      <div id="mobile-list" class="card-list"></div>
-
-      <p class="disclaimer">Built for the 2026 Congressional App Challenge, IL-15. Program details and hours change.
-        Always call ahead. This tool is informational and is not affiliated with any internet provider or government
-        agency.</p>
-    </section>
-
   </main>
+
+  <footer class="site-footer">
+    <p>Built for the 2026 Congressional App Challenge, IL-15. Program details and hours change. Always call ahead.
+      This tool is informational and is not affiliated with any internet provider or government agency.</p>
+  </footer>
 
   <script>
     /* =================================================================
@@ -1237,40 +1195,6 @@
        Cross-checked: lifelinesupport.org lists 135% for 1 person as $21,546, and
        human-i-t.org lists 200% for 1 person as $31,920. Both match this table. */
     const FPL_2026 = { 1: 15960, 2: 21640, 3: 27320, 4: 33000, 5: 38680, 6: 44360, 7: 50040, 8: 55720 };
-
-    /* Discount internet programs for the Plan Matcher tab.
-       qualify(income%, benefits) returns true if the household is likely eligible.
-       No official source we checked says whether Lifeline can be combined with
-       these plans, so the app does not add their prices together. */
-    const PROGRAMS = [
-      {
-        id: "lifeline",
-        name: "Lifeline (federal)",
-        price: "Up to $9.25/month off phone, internet, or bundled service",
-        url: "https://www.lifelinesupport.org/how-to-apply/",
-        source: "https://www.lifelinesupport.org/how-to-qualify/",
-        detail: "A federal discount, not a plan. Only one Lifeline discount is allowed per household. Apply online or call (800) 234-9473.",
-        qualify: (pct, b) => pct <= 135 || b.snap || b.medicaid || b.ssi
-      },
-      {
-        id: "att",
-        name: "Access from AT&T",
-        price: "Price and speed depend on your address. No annual contract, deposit, installation fee, or equipment fee.",
-        url: "https://www.att.com/internet/access/",
-        source: "https://www.att.com/internet/access/",
-        detail: "AT&T's low-income plan, in areas where AT&T Internet is available. Qualify with income below 200% of the poverty line or a program like SNAP, Medicaid, SSI, or school lunch.",
-        qualify: (pct, b) => pct < 200 || b.snap || b.nslp || b.medicaid || b.ssi
-      },
-      {
-        id: "spectrum",
-        name: "Spectrum Internet Assist",
-        price: "50 Mbps. Spectrum's page lists both $15/mo and $25/mo; confirm your price with Spectrum.",
-        url: "https://www.spectrum.net/support/account-and-billing/spectrum-internet-assist-and-internet-advantage",
-        source: "https://www.spectrum.com/internet/spectrum-internet-assist",
-        detail: "Spectrum's low-income plan, where Spectrum serves your address. Qualify through free/reduced school lunch (NSLP or a CEP school) or SSI.",
-        qualify: (pct, b) => b.nslp || b.ssi
-      }
-    ];
 
     /* What each benefit is called on screen. The codes are reused by the
        guide's eligibility check and by each resource's `programs` list. */
@@ -1341,18 +1265,31 @@
         rules: [
           "The adult computer lab is for ages 18 and older; a youth lab serves ages 17 and under.",
           "Printing is 10¢ per page black-and-white and 25¢ color.",
-          "Wi-Fi and guest-pass details are not listed online."
+          "Wi-Fi and guest-pass details are not listed online.",
+          "One-on-one help with computer or technology questions: email edereference@edwardsvillelibrary.org or call 618-692-7556 (ext. 6) to schedule an appointment with a librarian."
         ],
-        sources: ["https://www.edwardsvillelibrary.org/use-a-computer-print-fax-copy"]
+        sources: ["https://www.edwardsvillelibrary.org/use-a-computer-print-fax-copy", "https://www.edwardsvillelibrary.org/epl-extras"]
       },
       hayner: {
         rules: [
           "Sign in to a computer with a library card number or a guest account.",
           "Computer use is limited to 2 hours per day.",
           "Free Wi-Fi during open hours. No card? Ask at the Circulation Desk for a guest account number.",
-          "Printing is 15¢ per page black-and-white and 30¢ color."
+          "Printing is 15¢ per page black-and-white and 30¢ color.",
+          "Tech help appointments: 30 minutes, one-on-one with a Reference Librarian, booked online. Staff contact you within one to two business days. The page doesn't say which Hayner location. No device repair, account recovery, or entering banking details."
         ],
-        sources: ["https://www.haynerlibrary.org/digital-resources-collections/public-computers/", "https://www.haynerlibrary.org/digital-resources-collections/wireless-internet/"]
+        book: { label: "Book tech help", href: "https://www.haynerlibrary.org/how-do-i/library-services/tech-help-appointments/", note: "Opens Hayner's booking form" },
+        sources: ["https://www.haynerlibrary.org/digital-resources-collections/public-computers/", "https://www.haynerlibrary.org/digital-resources-collections/wireless-internet/", "https://www.haynerlibrary.org/how-do-i/library-services/tech-help-appointments/"]
+      },
+      mirowitz: {
+        rules: [
+          "Tech Tutor: free, in-person one-on-one sessions with your computer or phone, 30 minutes or one hour.",
+          "Fall 2026 schedule: Mondays, 10 AM to 2:30 PM, through November 30, 2026.",
+          "No cost to register, but RSVP is required. Online sign-up needs only your name, phone number, and email.",
+          "The trainer's main expertise is Apple devices, but he will try to help with Windows and other devices."
+        ],
+        book: { label: "RSVP for Tech Tutor", href: "https://mirowitzcenter.org/classes-events/", note: "Opens Mirowitz Center sign-up" },
+        sources: ["https://mirowitzcenter.org/wp-content/uploads/2026/09/2026-Sept-Oct-Nov-Senior-Planet-Flyer.pdf", "https://mirowitzcenter.org/classes-events/"]
       },
       belleville: {
         rules: [
@@ -1370,204 +1307,35 @@
       }
     };
 
-    /* Physical help sites.
-       district: one of the six map areas (see DISTRICTS below)
-       needs: device-loan | printing | public-computer | navigator | wifi
-         (only services an official page confirms; [] means none confirmed)
-       at: approximate [longitude, latitude] for the map dot (null = no single spot)
-       phone: as printed on the official site (null = not confirmed)
-       verified:false means the address could not be confirmed on an official site. */
-    const SITES = [
-      {
-        name: "NPower St. Louis Help Desk (City Digital Navigators)",
-        district: "city-north",
-        addr: "1408 Kingshighway Blvd., Ste. 109, St. Louis, MO 63113",
-        phone: "(314) 310-1031",
-        needs: ["navigator"],
-        system: "npower",
-        page: "https://www.npower.org/st-louis-help-desk/",
-        at: [-90.262, 38.662],
-        verified: true
-      },
-      {
-        name: "St. Louis Public Library, Julia Davis Branch",
-        district: "city-north",
-        addr: "4415 Natural Bridge Avenue, St. Louis, MO 63115",
-        phone: "(314) 241-2288",
-        needs: ["public-computer", "printing", "wifi"],
-        system: "slpl",
-        page: "https://www.slpl.org/locations/13/",
-        at: [-90.225, 38.672],
-        verified: true
-      },
-      {
-        name: "St. Louis Public Library, Central",
-        district: "city-south",
-        addr: "1301 Olive Street, St. Louis, MO 63103",
-        phone: "(314) 241-2288",
-        needs: ["public-computer", "printing", "wifi"],
-        system: "slpl",
-        page: "https://www.slpl.org/locations/9/",
-        at: [-90.199, 38.631],
-        verified: true
-      },
-      {
-        name: "St. Louis Public Library, Carondelet Branch",
-        district: "city-south",
-        addr: "6800 Michigan Avenue, St. Louis, MO 63111",
-        phone: "(314) 241-2288",
-        needs: ["public-computer", "printing", "wifi"],
-        system: "slpl",
-        page: "https://www.slpl.org/locations/10/",
-        at: [-90.252, 38.556],
-        verified: true
-      },
-      {
-        name: "St. Louis County Library, Natural Bridge Branch",
-        district: "county-north",
-        addr: "7606 Natural Bridge Rd., St. Louis, MO 63121",
-        phone: "(314) 994-3300",
-        needs: ["public-computer", "printing", "device-loan", "wifi"],
-        system: "slcl",
-        page: "https://www.slcl.org/hours-and-locations/natural-bridge-branch",
-        at: [-90.300, 38.705],
-        verified: true
-      },
-      {
-        name: "St. Louis County Library, Florissant Valley Branch",
-        district: "county-north",
-        addr: "195 New Florissant Rd. S., Florissant, MO 63031",
-        phone: "(314) 994-3300",
-        needs: ["public-computer", "printing", "device-loan", "wifi"],
-        system: "slcl",
-        page: "https://www.slcl.org/hours-and-locations/florissant-valley-branch",
-        at: [-90.320, 38.795],
-        verified: true
-      },
-      {
-        name: "St. Louis County Library, Clark Family Branch",
-        district: "county-central",
-        addr: "1640 S. Lindbergh Blvd., St. Louis, MO 63131",
-        phone: "(314) 994-3300",
-        needs: ["public-computer", "printing", "device-loan", "wifi"],
-        system: "slcl",
-        page: "https://www.slcl.org/hours-and-locations/clark-family-branch",
-        at: [-90.400, 38.630],
-        verified: true
-      },
-      {
-        name: "University City Public Library",
-        district: "county-central",
-        addr: "6701 Delmar Blvd., University City, MO 63130",
-        phone: "314-727-3150",
-        needs: ["public-computer", "printing", "device-loan", "wifi"],
-        system: "ucity",
-        page: "https://www.ucitylibrary.org/",
-        at: [-90.313, 38.656],
-        verified: true
-      },
-      {
-        name: "Kirkwood Public Library",
-        district: "county-central",
-        addr: "140 E. Jefferson Ave., Kirkwood, MO 63122 (listed online as a mailing address)",
-        phone: "(314) 821-5770",
-        needs: ["public-computer", "printing", "wifi"],
-        system: "kirkwood",
-        page: "https://kplmo.org/",
-        at: [-90.405, 38.582],
-        verified: false
-      },
-      {
-        name: "Mississippi Valley Library District, Collinsville Library",
-        district: "madison",
-        addr: "408 W Main St, Collinsville, IL 62234",
-        phone: "618-344-1112",
-        needs: ["public-computer", "wifi"],
-        system: "mvld",
-        page: "https://www.mvld.org/",
-        at: [-89.990, 38.670],
-        verified: true
-      },
-      {
-        name: "Edwardsville Public Library",
-        district: "madison",
-        addr: "112 South Kansas Street, Edwardsville, IL 62025",
-        phone: "618-692-7556",
-        needs: ["public-computer", "printing"],
-        system: "edwardsville",
-        page: "https://www.edwardsvillelibrary.org/",
-        at: [-89.955, 38.812],
-        verified: true
-      },
-      {
-        name: "Hayner Public Library, Downtown",
-        district: "madison",
-        addr: "326 Belle Street, Alton, IL 62002",
-        phone: "618-462-0677",
-        needs: ["public-computer", "printing", "wifi"],
-        system: "hayner",
-        page: "https://www.haynerlibrary.org/",
-        at: [-90.175, 38.893],
-        verified: true
-      },
-      {
-        name: "Six Mile Regional Library District",
-        district: "madison",
-        addr: "Granite City, IL. Address, hours, and services could not be confirmed online.",
-        phone: null,
-        needs: [],
-        system: null,
-        page: null,
-        at: [-90.150, 38.705],
-        verified: false
-      },
-      {
-        name: "Belleville Public Library",
-        district: "stclair",
-        addr: "121 E. Washington, Belleville, IL 62220",
-        phone: "618-234-0441",
-        needs: ["printing"],
-        system: "belleville",
-        page: "https://www.belleville.net/350/Library",
-        at: [-89.983, 38.513],
-        verified: true
-      },
-      {
-        name: "East St. Louis Public Library",
-        district: "stclair",
-        addr: "East St. Louis, IL. Address, hours, and services could not be confirmed online.",
-        phone: null,
-        needs: [],
-        system: null,
-        page: null,
-        at: [-90.100, 38.612],
-        verified: false
-      }
-    ];
-
-    const NEED_LABELS = {
-      "device-loan": "Device loans",
-      "printing": "Printing",
-      "public-computer": "Public computers",
-      "navigator": "In-person help",
-      "wifi": "Free Wi-Fi"
-    };
-
     /* =================================================================
-       GUIDED RESOURCES (Get Connected tab)
-       need: computer | borrow | internet | today
-       areas: "all" or a list of city | county | madison | stclair | other
-       programs / incomeRule: used to explain why a result may fit
+       RESOURCES: the one canonical dataset. Every record has a stable id.
+       type "program": something you apply for, buy, or borrow
+         need: computer | borrow | internet
+         areas: "all" or a list of city | county | madison | stclair | other
+         limits: the material restrictions, shown before details are expanded
+         programs / incomeRule: used to explain why a result may fit
+       type "service": help by appointment across an area, with no single address
+         serves: the map districts it covers
+       checked: the date a record's sources were read, when later than CHECKED
+       type "place": a physical location people can visit
+         district: one of the six map areas (see DISTRICTS below)
+         needs: device-loan | printing | public-computer | navigator | wifi
+           (only services an official page confirms; [] means none confirmed)
+         at: approximate [longitude, latitude] for the map dot
+         phone: as printed on the official site (null = not confirmed)
+         verified:false means the address could not be confirmed online
        Any field a source did not state is null.
        ================================================================= */
     const RESOURCES = [
       /* ---------- A computer to keep ---------- */
       {
         id: "pcs-computer",
+        type: "program",
         need: "computer",
-        kind: "Discounted purchase. You keep it.",
+        access: "Discounted purchase. You keep it.",
         title: "Buy a low-cost refurbished computer",
         org: "PCs for People (nonprofit). Greater St. Louis office in Belleville, IL.",
+        limits: "Income or benefit eligibility required. Supply is limited; call to check availability.",
         areas: "all",
         what: "A refurbished desktop or laptop that you own. Online orders include shipping within the contiguous U.S., a one-year hardware warranty, and a 30-day return policy.",
         qualifies: "Household income at or under 80% of Area Median Income (HUD limits), or someone in your household is enrolled in an assistance program such as SNAP/EBT, WIC, Medicaid, SSI or SSD, Social Security, TANF, LIHEAP, Head Start, free or reduced-price school lunch, Section 8/HUD, Pell Grant, unemployment, or child care assistance. Proof of citizenship is not required.",
@@ -1596,10 +1364,12 @@
       },
       {
         id: "learn2tech",
+        type: "program",
         need: "computer",
-        kind: "Free. Earned by finishing a class. You keep it.",
+        access: "Free. Earned by finishing a class. You keep it.",
         title: "Take a free digital skills class and earn a laptop",
         org: "Learn2Tech, St. Louis Development Corporation (ConnectSTL)",
+        limits: "Only for addresses in qualifying City of St. Louis census tracts. The laptop is awarded after you finish the program.",
         areas: ["city"],
         what: "Hands-on, in-person digital skills classes across the city. Eligible participants who complete the program may qualify for a free laptop, a hotspot, and 1 year of internet.",
         qualifies: "You must live in a qualified census tract in the City of St. Louis. Eligibility is verified before devices and internet are handed out. The program page does not list which tracts qualify, so ask when you sign up.",
@@ -1624,10 +1394,12 @@
       },
       {
         id: "humanit",
+        type: "program",
         need: "computer",
-        kind: "Discounted purchase. You keep it. Free requests are not guaranteed.",
+        access: "Discounted purchase. You keep it. Free requests are not guaranteed.",
         title: "Buy a discounted device online, or request a free one",
         org: "Human-I-T (national nonprofit; no St. Louis office found)",
+        limits: "Free devices are not guaranteed. Shipping to Missouri and Illinois is not described on the pages we checked.",
         areas: "all",
         what: "New and refurbished laptops, desktops, and tablets at low cost, with a 1-year hardware warranty and 1 year of tech support. Human-I-T also accepts free-device requests and fills them based on need and current device availability.",
         qualifies: "Household income at or under 200% of the 2026 federal poverty level, or someone in your household gets SNAP, Medicaid, Social Security (SSI, SSDI, or retirement), Section 8, TANF, WIC, school lunch, Lifeline, LIHEAP, VA benefits, a Pell Grant, Head Start, or General Assistance.",
@@ -1656,10 +1428,12 @@
       /* ---------- A device to borrow ---------- */
       {
         id: "slcl-kit",
+        type: "program",
         need: "borrow",
-        kind: "Borrowed for 21 days. You return it.",
+        access: "Borrowed for 21 days. You return it.",
         title: "Borrow a Chromebook and hotspot kit",
         org: "St. Louis County Library",
+        limits: "For St. Louis County Library cardholders 18 and up. 21-day loan, no renewals.",
         areas: "all",
         what: "A kit with a Chromebook and a Wi-Fi hotspot that can connect up to 10 devices at once.",
         qualifies: "St. Louis County Library cardholders aged 18 and up with an established card in good standing. Residency rules for kits are not listed on this page.",
@@ -1687,10 +1461,12 @@
       },
       {
         id: "slcl-hotspot",
+        type: "program",
         need: "borrow",
-        kind: "Borrowed for 21 days. You return it.",
+        access: "Borrowed for 21 days. You return it.",
         title: "Borrow a Wi-Fi hotspot",
         org: "St. Louis County Library",
+        limits: "For adult cardholders in good standing. $250 fee if lost or damaged.",
         areas: "all",
         what: "A Wi-Fi hotspot to use at home. Hotspots are available for checkout at all locations.",
         qualifies: "Adult cardholders in good standing.",
@@ -1712,10 +1488,12 @@
       },
       {
         id: "ucity-kit",
+        type: "program",
         need: "borrow",
-        kind: "Borrowed for up to 3 weeks. You return it.",
+        access: "Borrowed for up to 3 weeks. You return it.",
         title: "Borrow a Chromebook and hotspot kit",
         org: "University City Public Library",
+        limits: "Requires an adult University City library card and a signed form.",
         areas: "all",
         what: "Chromebook and mobile hotspot kits you can check out for up to three weeks at a time.",
         qualifies: "An adult library card and a signed form. Residency rules are not listed on this page.",
@@ -1739,10 +1517,12 @@
       /* ---------- Internet at home ---------- */
       {
         id: "lifeline",
+        type: "program",
         need: "internet",
-        kind: "Monthly discount on a phone or internet bill",
+        access: "Monthly discount on a phone or internet bill",
         title: "Lifeline: up to $9.25 off each month",
         org: "Federal program (FCC), run by USAC",
+        limits: "A discount, not an internet plan. One Lifeline discount per household.",
         areas: "all",
         what: "A monthly discount of up to $9.25 on phone, internet, or bundled service. It is a discount, not a plan: you use it with a company that offers Lifeline.",
         qualifies: "Household income at or below 135% of the 2026 federal poverty guidelines, or you or someone in your household gets Medicaid, SNAP, SSI, Federal Public Housing Assistance (including Section 8), or the Veterans Pension and Survivors Benefit. Only one discount per household.",
@@ -1767,10 +1547,12 @@
       },
       {
         id: "att-access",
+        type: "program",
         need: "internet",
-        kind: "Low-cost monthly plan",
+        access: "Low-cost monthly plan",
         title: "Access from AT&T",
         org: "AT&T",
+        limits: "Only where AT&T Internet is available at your address.",
         areas: "all",
         what: "AT&T's low-income home internet plan, where AT&T Internet is available at your address. Your monthly price and speed depend on what is available there.",
         qualifies: "Household income below 200% of the federal poverty guideline, or someone in your household gets SNAP, Medicaid, SSI, WIC, TANF, school lunch, LIHEAP, a Pell Grant, Head Start, Federal Public Housing Assistance, or Veterans and Survivors Pension, among others. Limited availability by area.",
@@ -1797,10 +1579,12 @@
       },
       {
         id: "spectrum-assist",
+        type: "program",
         need: "internet",
-        kind: "Low-cost monthly plan",
+        access: "Low-cost monthly plan",
         title: "Spectrum Internet Assist",
         org: "Spectrum (Charter)",
+        limits: "Only where Spectrum serves your address. Spectrum lists both $15 and $25 per month.",
         areas: "all",
         what: "50 Mbps home internet with a modem and in-home WiFi included, no data caps, and no contract. Advanced WiFi is an extra $10/month.",
         qualifies: "Someone in your household gets free or reduced-price school lunch (NSLP or a CEP school) or SSI. Spectrum must serve your address; check it on Spectrum's site.",
@@ -1821,10 +1605,12 @@
       },
       {
         id: "pcs-internet",
+        type: "program",
         need: "internet",
-        kind: "Low-cost prepaid plan",
+        access: "Low-cost prepaid plan",
         title: "Prepaid mobile hotspot internet",
         org: "PCs for People (nonprofit)",
+        limits: "The hotspot device price is not listed. You must prove eligibility every year.",
         areas: "all",
         what: "Unlimited 5G/LTE internet through a mobile hotspot, with no throttling, no contract, and no credit check. Fixed wireless service runs up to 100 Mbps download.",
         qualifies: "Same as PCs for People computers: income at or under 80% of Area Median Income, or enrollment in a program such as SNAP, WIC, Medicaid, SSI, TANF, LIHEAP, school lunch, Section 8, a Pell Grant, or unemployment. You must prove eligibility every year.",
@@ -1847,60 +1633,546 @@
         sources: ["https://www.pcsforpeople.org/internet/", "https://www.pcsforpeople.org/eligibility/"],
         programs: ["snap", "wic", "medicaid", "ssi", "tanf", "liheap", "nslp", "housing", "pell"],
         incomeRule: { ami: 80 }
+      },
+
+      /* ---------- Added Oct 25, 2026: computers to keep ---------- */
+      {
+        id: "bworks-earn-a-computer",
+        type: "program",
+        need: "computer",
+        access: "Free. Earned by finishing a class. You keep it.",
+        title: "Earn-A-Computer class for kids and teens",
+        org: "St. Louis BWorks (nonprofit), Soulard, St. Louis City",
+        limits: "Only for students ages 8 to 17. A parent registers. Up to two children per household, and classes are capped at 12 students.",
+        areas: "all",
+        what: "A free, hands-on class. Students take home a refurbished computer system at the end of six class sessions. The computer runs Linux, not Windows or Mac OS.",
+        qualifies: "Students ages 8 to 17 who attend all six sessions. Up to two children from one household can join a class. No income or residency rule is stated.",
+        cost: "Free. All BWorks classes are free for students.",
+        bring: null,
+        steps: [
+          "Pick a class on the BWorks classes page. Fall 2026 sessions: Thursdays at 6 p.m., November 5 to December 17 (no class 11/26), or Saturdays at 10 a.m., November 7 to December 19 (no class 11/28).",
+          "A parent fills out the registration form and the permission, liability, medical, and photo release form, with a separate form for each child.",
+          "Attend all six sessions at 2414 Menard Street, St. Louis, MO 63104."
+        ],
+        next: "Students take the computer home after successfully completing the course. BWorks notes that spots are limited.",
+        availability: "Spots are limited; open seats are not confirmed.",
+        actions: [
+          { label: "Sign up for a class", href: "https://www.bworks.org/classes/", note: "Opens BWorks class sign-up" },
+          { label: "Call BWorks", tel: "(314) 664-0828" },
+          { label: "Get directions", directions: "2414 Menard Street, St. Louis, MO 63104" }
+        ],
+        sources: ["https://www.bworks.org/classes/", "https://form.jotform.com/262684084771163"],
+        checked: "2026-10-25",
+        programs: null,
+        incomeRule: null,
+        areaCheck: "For students ages 8 to 17, with a parent registering. Classes meet in person in Soulard (St. Louis City)."
+      },
+      {
+        id: "computers-for-the-blind",
+        type: "program",
+        need: "computer",
+        access: "Discounted purchase. You keep it.",
+        title: "Low-cost computers with screen reading or magnification software",
+        org: "Computers for the Blind (national nonprofit, Richardson, TX)",
+        limits: "Only for people who are blind or have low vision; proof of visual impairment is required. Stock depends on donations.",
+        areas: "all",
+        what: "Refurbished laptops, desktops, and iPads with Windows 11 Pro, Microsoft Office, and a one-year license for JAWS, ZoomText, or Fusion. The license renews at the regular annual price afterward.",
+        qualifies: "Any individual with a visual impairment in the United States. No income or age requirements.",
+        cost: "Base laptop $250 (8GB RAM, 250GB SSD, 12-14\" screen). iPad 9th generation $250. Upgrades and add-ons cost extra. Free shipping in the USA. Ask about grants and other discounts.",
+        bring: ["Proof of visual impairment. The specific documents accepted are not listed.", "An email address to activate the software license."],
+        steps: [
+          "Order online or call Customer Service at (214) 340-6328, Monday to Friday, 9am to 7pm.",
+          "A Customer Service agent calls you to complete the order, including payment."
+        ],
+        next: "After you submit your order, a Customer Service agent calls you to complete it, including payment. Shipping is free in the USA.",
+        availability: "Inventory depends on donations, so they cannot predict what is in stock.",
+        actions: [
+          { label: "Request a computer", href: "https://computersfortheblind.org/application/", note: "Opens Computers for the Blind" },
+          { label: "Call Computers for the Blind", tel: "(214) 340-6328" }
+        ],
+        sources: ["https://computersfortheblind.org/application/", "https://computersfortheblind.org/src/documents/CFTBPriceSheet.pdf"],
+        checked: "2026-10-25",
+        programs: null,
+        incomeRule: null,
+        areaCheck: "Only for people who are blind or have low vision. There are no income or age requirements."
+      },
+
+      /* ---------- Added Oct 25, 2026: devices to borrow ---------- */
+      {
+        id: "kirkwood-tech-loans",
+        type: "program",
+        need: "borrow",
+        access: "Borrowed for 3 weeks. You return it.",
+        title: "Borrow a Chromebook, Chromebook tablet, or hotspot",
+        org: "Kirkwood Public Library",
+        limits: "Needs a Kirkwood or other MLC library card with less than $10 in fines. Pick up and return only at Kirkwood Public Library.",
+        areas: ["city", "county"],
+        what: "Chromebooks, Chromebook tablets, and a 4G LTE mobile hotspot from the library's Library of Things.",
+        qualifies: "Free cards for anyone living in Kirkwood, St. Louis County, St. Louis City, or St. Charles City-County. Others pay $50 per year per family. A physical card needs an in-person visit with photo ID and proof of address. Under 18: a parent or guardian must be present to sign permission.",
+        cost: "Free to borrow with a free card. Overdue technology fines are $1.00 per day per item, up to $28. At 28 days overdue: replacement cost plus a $5.00 processing fee. $10.00 if you reset a device that can be restored.",
+        bring: ["Photo ID and proof of address if you need a physical library card."],
+        steps: [
+          "Get a Kirkwood library card, or use a card from your home MLC library.",
+          "Place a hold in the catalog, or ask at the library.",
+          "Pick up at Kirkwood Public Library, 140 East Jefferson Ave.",
+          "Return it to a staff member at Kirkwood Public Library. Book-drop returns are not allowed."
+        ],
+        next: "Loans are 3 weeks. Kirkwood's policy allows 3 renewals, but its FAQ table says 2; ask the library.",
+        availability: "Call to check availability.",
+        actions: [
+          { label: "Reserve a device", href: "https://kplmo.org/books-and-media/library-of-things/", note: "Opens Kirkwood's Library of Things" },
+          { label: "Call this location", tel: "(314) 821-5770" }
+        ],
+        sources: ["https://kplmo.org/books-and-media/library-of-things/", "https://kplmo.org/hello/", "https://kplmo.org/using-the-library/faq/"],
+        checked: "2026-10-25",
+        areaCheck: "Library cards are free for St. Louis City and County residents. You'll need to visit Kirkwood with photo ID and proof of address."
+      },
+      {
+        id: "richmond-heights-kits",
+        type: "program",
+        need: "borrow",
+        access: "Borrowed for 3 weeks. You return it.",
+        title: "Borrow a Chromebook or a Chromebook and hotspot kit",
+        org: "Richmond Heights Memorial Library",
+        limits: "For adult MLC cardholders (18+) in good standing. 3-week loan, no renewals. Pick up and return only at Richmond Heights.",
+        areas: ["city", "county"],
+        what: "Two options: a Chromebook kit for use with internet you already have, or a Connectivity Kit with a Chromebook and a mobile hotspot.",
+        qualifies: "Adult MLC cardholders (18+). Richmond Heights residents get a resident card. Residents of the St. Louis Public Library and St. Louis County Library districts can get a free non-resident card. Others can buy one for $50 a year. Residents of other MLC cities get their card from their home library.",
+        cost: "Free to borrow. Replacement costs if lost or damaged: Chromebook $297, hotspot $57, plus cases, chargers, and tags ($5 to $20 each).",
+        bring: ["Your MLC library card."],
+        steps: [
+          "Check availability in the library catalog.",
+          "Pick up the kit at Richmond Heights Memorial Library, 8001 Dale Avenue.",
+          "Return it to Richmond Heights within 3 weeks."
+        ],
+        next: null,
+        availability: "Call to check availability.",
+        actions: [
+          { label: "Reserve a device", href: "https://www.richmondheightslibrary.org/technology-to-go/", note: "Opens Richmond Heights Technology to Go" },
+          { label: "Call this location", tel: "314-645-6202" }
+        ],
+        sources: ["https://www.richmondheightslibrary.org/technology-to-go/", "https://www.richmondheightslibrary.org/library-policies/"],
+        checked: "2026-10-25",
+        ageMin: 18
+      },
+      {
+        id: "glen-carbon-hotspot",
+        type: "program",
+        need: "borrow",
+        access: "Borrowed. You return it.",
+        title: "Borrow a Wi-Fi hotspot",
+        org: "Glen Carbon Centennial Library (Madison County, IL)",
+        limits: "First come, first served; no holds. Loan length is not listed. Free cards are for Glen Carbon residents; others need a paid or reciprocal card.",
+        areas: ["madison", "stclair"],
+        what: "An Alcatel Linkzone hotspot that connects up to 10 devices at once, lent as an Express item.",
+        qualifies: "Glen Carbon residents (or property or business owners) 16 and older get a resident card; under 16 a juvenile card with a parent. Others can buy a non-resident card, priced by property value. Non-resident cardholders can borrow at libraries in the Illinois Heartland Library System's reciprocal program.",
+        cost: "The library does not charge fines, but you are responsible for fees on lost items. The hotspot replacement cost is not listed.",
+        bring: ["Your library card."],
+        steps: [
+          "Check availability online, or call (618) 288-1212.",
+          "Visit the library at 198 S. Main, Glen Carbon, and check one out from the Express items."
+        ],
+        next: null,
+        availability: "First come, first served. Call to check availability.",
+        actions: [
+          { label: "Call this location", tel: "(618) 288-1212" },
+          { label: "Check availability", href: "https://glencarbonlibrary.org/equipment/", note: "Opens Glen Carbon's equipment page" },
+          { label: "Get directions", directions: "198 S. Main, Glen Carbon, IL 62034" }
+        ],
+        sources: ["https://glencarbonlibrary.org/equipment/", "https://glencarbonlibrary.org/get-a-library-card/", "https://glencarbonlibrary.org/policies-faqs/"],
+        checked: "2026-10-25",
+        areaCheck: "Free cards are for Glen Carbon residents. Ask whether your own library's card works there through reciprocal borrowing."
+      },
+      {
+        id: "ofallon-il-hotspot",
+        type: "program",
+        need: "borrow",
+        access: "Borrowed. You return it.",
+        title: "Borrow a Wi-Fi hotspot",
+        org: "O'Fallon Public Library (St. Clair County, IL)",
+        limits: "Loan length and hotspot fees are not listed; ask the library. Free cards are for residents of the library's taxing area.",
+        areas: ["madison", "stclair"],
+        what: "A portable Wi-Fi hotspot from the library's Library of Things. Chromebooks are for in-library use only.",
+        qualifies: "Anyone living in the O'Fallon Public Library taxing area. Ages 0 to 17 need a parent's permission; teens 15 to 17 can apply on their own with ID and address verification. Non-residents can buy a card. Illinois residents whose library is outside the SHARE system may qualify for a reciprocal account.",
+        cost: "No daily overdue fines. At 30 days overdue an item is considered lost and you are billed the replacement cost; fees are waived if it is returned in good condition within 60 days.",
+        bring: ["Your library card."],
+        steps: [
+          "Check availability and place a request in the catalog, or call 618-632-3783.",
+          "Pick it up at 120 Civic Plaza, O'Fallon, IL."
+        ],
+        next: null,
+        availability: "Call to check availability.",
+        actions: [
+          { label: "Reserve a device", href: "https://ofpl.info/libraryofthings", note: "Opens O'Fallon's Library of Things" },
+          { label: "Call this location", tel: "618-632-3783" }
+        ],
+        sources: ["https://ofpl.info/libraryofthings", "https://www.ofpl.info/policies"],
+        checked: "2026-10-25",
+        areaCheck: "Free cards are for residents of the O'Fallon library's taxing area. Others can buy a card or may qualify for a reciprocal account."
+      },
+
+      /* ---------- Added Oct 25, 2026: home internet ---------- */
+      {
+        id: "tmobile-project-10million",
+        type: "program",
+        need: "internet",
+        access: "Free hotspot and data for student households",
+        title: "Project 10Million: free hotspot for K-12 students",
+        org: "T-Mobile",
+        limits: "Only for households with a K-12 student. One data line per household. Limited time, and available lines are limited. Coverage is not available in some areas.",
+        areas: "all",
+        what: "One free T-Mobile hotspot and 200GB of mobile data per year for five years. Video streams in SD (up to 2.5Mbps).",
+        qualifies: "Households with an eligible K-12 student and proof of enrollment, dated within one year, in NSLP, CEP, Medicaid, SNAP/EBT, or FDPIR. T-Mobile customers and non-customers can apply. Available in the United States and Puerto Rico; devices can't ship to PO boxes.",
+        cost: "Free. Extra data passes are $10 for 10GB.",
+        bring: [
+          "Proof of program enrollment, such as an NSLP or SNAP eligibility letter, an EBT card (front and back), a Medicaid letter or card, or a school letter for CEP. Portal screenshots are accepted.",
+          "A valid parent or guardian photo ID if the parent's name isn't on the program document. Student ID cards and blurry images are not accepted."
+        ],
+        steps: [
+          "Apply online and choose the program you're using to qualify.",
+          "Upload up to three clear photos or scans (PNG, JPG, JPEG, or PDF, 9MB or less each).",
+          "Complete the verification form T-Mobile emails you within seven days so your device can ship."
+        ],
+        next: "After approval the hotspot ships. If you haven't received shipping details within seven days, call 1-877-PRJ-10MN (1-877-775-1066).",
+        availability: null,
+        actions: [
+          { label: "Apply for internet", href: "https://www.t-mobile.com/brand/project-10-million-form/start", note: "Opens T-Mobile's application" },
+          { label: "Call Project 10Million", tel: "1-877-775-1066" }
+        ],
+        sources: ["https://www.t-mobile.com/support/account/project-10million-direct-to-parent-guardian-eligibility"],
+        checked: "2026-10-25",
+        programs: ["nslp", "medicaid", "snap"],
+        incomeRule: null,
+        alsoRequires: "Also requires a K-12 student in your household."
+      },
+      {
+        id: "assurance-wireless-lifeline",
+        type: "program",
+        need: "internet",
+        access: "Free phone service and data through Lifeline",
+        title: "Assurance Wireless: free Lifeline data, talk, and text",
+        org: "Assurance Wireless (a Lifeline provider on the T-Mobile network)",
+        limits: "Uses your household's one Lifeline benefit. Only in selected areas, so availability depends on your address. Phones are not free in Missouri or Illinois.",
+        areas: "all",
+        what: "10GB of high-speed data and unlimited talk and text each month, with mobile hotspot up to your data allotment. Bring a compatible phone or buy a low-cost one.",
+        qualifies: "Missouri and Illinois residents in Assurance's service areas who get SNAP, Medicaid, SSI, Federal Public Housing Assistance, or Veterans Pension or Survivors Benefit, or whose income is at or below 135% of the federal poverty guidelines. One Lifeline service per household.",
+        cost: "Free plan. State and local sales taxes and fees may apply, and a minimum $5 top-up may be required. Extra data costs extra.",
+        bring: ["Proof of program enrollment or income documents, if the National Verifier can't confirm your eligibility from its databases."],
+        steps: [
+          "Apply online; it takes about 7 to 10 minutes. Have your documents ready.",
+          "Choose to bring your own phone or buy a low-cost phone.",
+          "Finish the National Verifier step you're sent to, and upload proof if asked.",
+          "Once approved, activate My Account."
+        ],
+        next: "Once your application is processed and approved, Assurance tells you your next steps. If you chose to buy a phone, you then pick and pay for it.",
+        availability: null,
+        actions: [
+          { label: "Apply for internet", href: "https://www.assurancewireless.com/apply-now", note: "Opens Assurance Wireless" },
+          { label: "Call Assurance Wireless", tel: "1-888-321-5880" }
+        ],
+        sources: ["https://www.assurancewireless.com/lifeline-services/states/missouri-lifeline-free-government-phone-service", "https://www.assurancewireless.com/lifeline-services/states/illinois-lifeline-free-government-phone-service", "https://www.assurancewireless.com/help-center/contact"],
+        checked: "2026-10-25",
+        programs: ["snap", "medicaid", "ssi", "housing", "vet"],
+        incomeRule: { fplPct: 135 }
+      },
+
+      /* ---------- Places ---------- */
+      {
+        id: "npower-help-desk",
+        type: "place",
+        name: "NPower St. Louis Help Desk (City Digital Navigators)",
+        district: "city-north",
+        addr: "1408 Kingshighway Blvd., Ste. 109, St. Louis, MO 63113",
+        phone: "(314) 310-1031",
+        needs: ["navigator"],
+        system: "npower",
+        page: "https://www.npower.org/st-louis-help-desk/",
+        at: [-90.262, 38.662],
+        verified: true
+      },
+      {
+        id: "slpl-julia-davis",
+        type: "place",
+        name: "St. Louis Public Library, Julia Davis Branch",
+        district: "city-north",
+        addr: "4415 Natural Bridge Avenue, St. Louis, MO 63115",
+        phone: "(314) 241-2288",
+        needs: ["public-computer", "printing", "wifi"],
+        system: "slpl",
+        page: "https://www.slpl.org/locations/13/",
+        at: [-90.225, 38.672],
+        verified: true
+      },
+      {
+        id: "slpl-central",
+        type: "place",
+        name: "St. Louis Public Library, Central",
+        district: "city-south",
+        addr: "1301 Olive Street, St. Louis, MO 63103",
+        phone: "(314) 241-2288",
+        needs: ["public-computer", "printing", "wifi"],
+        system: "slpl",
+        page: "https://www.slpl.org/locations/9/",
+        at: [-90.199, 38.631],
+        verified: true
+      },
+      {
+        id: "slpl-carondelet",
+        type: "place",
+        name: "St. Louis Public Library, Carondelet Branch",
+        district: "city-south",
+        addr: "6800 Michigan Avenue, St. Louis, MO 63111",
+        phone: "(314) 241-2288",
+        needs: ["public-computer", "printing", "wifi"],
+        system: "slpl",
+        page: "https://www.slpl.org/locations/10/",
+        at: [-90.252, 38.556],
+        verified: true
+      },
+      {
+        id: "slcl-natural-bridge",
+        type: "place",
+        name: "St. Louis County Library, Natural Bridge Branch",
+        district: "county-north",
+        addr: "7606 Natural Bridge Rd., St. Louis, MO 63121",
+        phone: "(314) 994-3300",
+        needs: ["public-computer", "printing", "device-loan", "wifi"],
+        system: "slcl",
+        page: "https://www.slcl.org/hours-and-locations/natural-bridge-branch",
+        at: [-90.300, 38.705],
+        verified: true
+      },
+      {
+        id: "slcl-florissant-valley",
+        type: "place",
+        name: "St. Louis County Library, Florissant Valley Branch",
+        district: "county-north",
+        addr: "195 New Florissant Rd. S., Florissant, MO 63031",
+        phone: "(314) 994-3300",
+        needs: ["public-computer", "printing", "device-loan", "wifi"],
+        system: "slcl",
+        page: "https://www.slcl.org/hours-and-locations/florissant-valley-branch",
+        at: [-90.320, 38.795],
+        verified: true
+      },
+      {
+        id: "slcl-clark-family",
+        type: "place",
+        name: "St. Louis County Library, Clark Family Branch",
+        district: "county-central",
+        addr: "1640 S. Lindbergh Blvd., St. Louis, MO 63131",
+        phone: "(314) 994-3300",
+        needs: ["public-computer", "printing", "device-loan", "wifi"],
+        system: "slcl",
+        page: "https://www.slcl.org/hours-and-locations/clark-family-branch",
+        at: [-90.400, 38.630],
+        verified: true
+      },
+      {
+        id: "ucity-library",
+        type: "place",
+        name: "University City Public Library",
+        district: "county-central",
+        addr: "6701 Delmar Blvd., University City, MO 63130",
+        phone: "314-727-3150",
+        needs: ["public-computer", "printing", "device-loan", "wifi"],
+        system: "ucity",
+        page: "https://www.ucitylibrary.org/",
+        at: [-90.313, 38.656],
+        verified: true
+      },
+      {
+        id: "kirkwood-library",
+        type: "place",
+        name: "Kirkwood Public Library",
+        district: "county-central",
+        addr: "140 East Jefferson Ave., Kirkwood, MO 63122",
+        phone: "(314) 821-5770",
+        needs: ["public-computer", "printing", "wifi", "device-loan"],
+        system: "kirkwood",
+        page: "https://kplmo.org/using-the-library/contact/",
+        at: [-90.405, 38.582],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "mvld-collinsville",
+        type: "place",
+        name: "Mississippi Valley Library District, Collinsville Library",
+        district: "madison",
+        addr: "408 W Main St, Collinsville, IL 62234",
+        phone: "618-344-1112",
+        needs: ["public-computer", "wifi"],
+        system: "mvld",
+        page: "https://www.mvld.org/",
+        at: [-89.990, 38.670],
+        verified: true
+      },
+      {
+        id: "edwardsville-library",
+        type: "place",
+        name: "Edwardsville Public Library",
+        district: "madison",
+        addr: "112 South Kansas Street, Edwardsville, IL 62025",
+        phone: "618-692-7556",
+        needs: ["public-computer", "printing", "navigator"],
+        system: "edwardsville",
+        page: "https://www.edwardsvillelibrary.org/",
+        at: [-89.955, 38.812],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "hayner-downtown",
+        type: "place",
+        name: "Hayner Public Library, Downtown",
+        district: "madison",
+        addr: "326 Belle Street, Alton, IL 62002",
+        phone: "618-462-0677",
+        needs: ["public-computer", "printing", "wifi", "navigator"],
+        system: "hayner",
+        page: "https://www.haynerlibrary.org/",
+        at: [-90.175, 38.893],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "six-mile-library",
+        type: "place",
+        name: "Six Mile Regional Library District",
+        district: "madison",
+        addr: "Granite City, IL. Address, hours, and services could not be confirmed online.",
+        phone: null,
+        needs: [],
+        system: null,
+        page: null,
+        at: [-90.150, 38.705],
+        verified: false
+      },
+      {
+        id: "belleville-library",
+        type: "place",
+        name: "Belleville Public Library",
+        district: "stclair",
+        addr: "121 E. Washington, Belleville, IL 62220",
+        phone: "618-234-0441",
+        needs: ["printing"],
+        system: "belleville",
+        page: "https://www.belleville.net/350/Library",
+        at: [-89.983, 38.513],
+        verified: true
+      },
+      {
+        id: "esl-library",
+        type: "place",
+        name: "East St. Louis Public Library",
+        district: "stclair",
+        addr: "East St. Louis, IL. Address, hours, and services could not be confirmed online.",
+        phone: null,
+        needs: [],
+        system: null,
+        page: null,
+        at: [-90.100, 38.612],
+        verified: false
+      },
+
+      /* ---------- Places added Oct 25, 2026 ---------- */
+      {
+        id: "richmond-heights-library",
+        type: "place",
+        name: "Richmond Heights Memorial Library",
+        district: "county-central",
+        addr: "8001 Dale Avenue, Richmond Heights, MO 63117",
+        phone: "314-645-6202",
+        needs: ["device-loan"],
+        system: null,
+        page: "https://www.richmondheightslibrary.org/technology-to-go/",
+        at: [-90.330, 38.628],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "mirowitz-center",
+        type: "place",
+        name: "Mirowitz Center: Tech Tutor",
+        district: "county-central",
+        addr: "8 Millstone Campus Drive, St. Louis, MO 63146",
+        phone: "314-733-9813",
+        needs: ["navigator"],
+        system: "mirowitz",
+        page: "https://mirowitzcenter.org/classes-events/",
+        at: [-90.437, 38.672],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "glen-carbon-library",
+        type: "place",
+        name: "Glen Carbon Centennial Library",
+        district: "madison",
+        addr: "198 S. Main, Glen Carbon, IL 62034",
+        phone: "(618) 288-1212",
+        needs: ["device-loan", "public-computer"],
+        system: null,
+        page: "https://glencarbonlibrary.org/equipment/",
+        at: [-89.983, 38.748],
+        verified: true,
+        checked: "2026-10-25"
+      },
+      {
+        id: "ofallon-il-library",
+        type: "place",
+        name: "O'Fallon Public Library",
+        district: "stclair",
+        addr: "120 Civic Plaza, O'Fallon, IL 62269",
+        phone: "618-632-3783",
+        needs: ["device-loan", "public-computer"],
+        system: null,
+        page: "https://ofpl.info/libraryofthings",
+        at: [-89.911, 38.592],
+        verified: true,
+        checked: "2026-10-25"
+      },
+
+      /* ---------- Services by appointment (no single location) ---------- */
+      {
+        id: "slpl-tech-connect",
+        type: "service",
+        name: "St. Louis Public Library: Tech Connect",
+        serves: ["city-north", "city-south"],
+        what: "One-hour, one-on-one technology help appointments, in person or virtual. Topics include computer and Microsoft Office basics, phones and tablets, creating online accounts, job searches and resumes, and eMedia.",
+        notes: "The page doesn't say which branch hosts in-person appointments, who is eligible, or whether there is a cost. It does not mention help applying for internet or device programs.",
+        phone: "314-241-2288",
+        book: { label: "Book tech help", href: "https://docs.google.com/forms/d/e/1FAIpQLSc-WRTXAIAFq2ZFqSEzZhkotvcE9gaQudzqXx9F1H0_okGDwg/viewform", note: "Opens SLPL's booking form" },
+        sources: ["https://slpl.org/tech-connect"],
+        checked: "2026-10-25"
+      },
+      {
+        id: "slcl-digital-navigator",
+        type: "service",
+        name: "St. Louis County Library: Book a Navigator",
+        serves: ["county-north", "county-central"],
+        what: "Appointments with Digital Navigators for help with the library's eMedia and other computer or mobile device learning needs. Listed for adults and teens.",
+        notes: "Excludes tech support and device repair. Staff contact you within 4 weekdays to schedule. The page doesn't say whether appointments are in person or virtual, or whether there is a cost.",
+        phone: "(314) 994-3300",
+        book: { label: "Book a navigator", href: "https://www.slcl.org/library-services/one-on-one-assistance/navigator", note: "Opens SLCL's booking page" },
+        sources: ["https://www.slcl.org/library-services/one-on-one-assistance/navigator"],
+        checked: "2026-10-25"
       }
     ];
 
-    /* =================================================================
-       FEATURE 1: THE MATCHER
-       Plain if/else eligibility logic.
-       ================================================================= */
-    document.getElementById("run-matcher").addEventListener("click", () => {
-      const hh = parseInt(document.getElementById("hh").value, 10);
-      const income = parseFloat(document.getElementById("income").value);
-      const benefits = {
-        snap: document.getElementById("b-snap").checked,
-        nslp: document.getElementById("b-nslp").checked,
-        medicaid: document.getElementById("b-medicaid").checked,
-        ssi: document.getElementById("b-ssi").checked
-      };
-      const out = document.getElementById("matcher-results");
+    const PROGRAMS = RESOURCES.filter(r => r.type === "program");
+    const PLACES = RESOURCES.filter(r => r.type === "place");
+    const SERVICES = RESOURCES.filter(r => r.type === "service");
+    const RESOURCE_BY_ID = Object.fromEntries(RESOURCES.map(r => [r.id, r]));
 
-      if (isNaN(income)) {
-        out.innerHTML = '<div class="result no"><h3>Add your income first</h3><p>An estimate is fine. Round to the nearest thousand.</p></div>';
-        return;
-      }
-
-      // Income as a percent of the 2026 poverty line for this household size
-      const fpl = FPL_2026[hh];
-      const pct = (income / fpl) * 100;
-
-      const matches = PROGRAMS.filter(p => p.qualify(pct, benefits));
-      let html = "";
-
-      if (matches.length === 0) {
-        html = '<div class="result no"><h3>No discount programs matched</h3><p>Based on what you entered, this household is likely above the income cutoffs. The Find Help tab still has free Wi-Fi and computer locations near you.</p></div>';
-      } else {
-        matches.forEach(p => {
-          html += `<div class="result">
-        <h3>${p.name}</h3>
-        <div class="price">${p.price}</div>
-        <p>${p.detail}</p>
-        <p><a href="${p.url}" target="_blank" rel="noopener">Apply on the official site (opens a new tab)</a></p>
-        <p class="checked"><a href="${p.source}" target="_blank" rel="noopener">Official details</a> · Source checked ${formatDate(CHECKED)}</p>
-      </div>`;
-        });
-
-        // Lifeline is a discount; whether it combines with a low-cost plan is not
-        // stated by any official source we checked, so we don't add prices together.
-        if (matches.some(p => p.id === "lifeline") && matches.length > 1) {
-          html += `<div class="stack-note">Lifeline is a separate discount. No official source we checked says whether it can be combined with these plans, so ask the internet company before you sign up.</div>`;
-        }
-      }
-
-      html += `<p class="disclaimer">Estimate only, based on the 2026 federal poverty guidelines ($${fpl.toLocaleString()} for a household of ${hh}). Each provider makes the final call. Income for this household is roughly ${Math.round(pct)}% of the poverty line.</p>`;
-      out.innerHTML = html;
-      out.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    const NEED_LABELS = {
+      "device-loan": "Device loans",
+      "printing": "Printing",
+      "public-computer": "Public computers",
+      "navigator": "In-person help",
+      "wifi": "Free Wi-Fi"
+    };
 
     /* =================================================================
        FEATURE 2: THE REGION MAP
@@ -2078,10 +2350,10 @@
     DISTRICTS.forEach(d => addText("map-label", d.label, d.labelAt, 13, labelLayer));
 
     const pinLayer = draw("g", {}, svg);
-    SITES.forEach((s, i) => {
+    PLACES.forEach(s => {
       if (!s.at) return;
       const [cx, cy] = project(s.at);
-      const pin = draw("circle", { class: "pin", cx, cy, "data-site": i, "data-district": s.district }, pinLayer);
+      const pin = draw("circle", { class: "pin", cx, cy, "data-id": s.id, "data-district": s.district }, pinLayer);
       draw("title", {}, pin).textContent = s.name;
       scalable.push({ node: pin, size: 5, kind: "pin" });
     });
@@ -2141,54 +2413,117 @@
       return [clamp(b.x + b.width / 2 - w / 2, MAP.width - w), clamp(b.y + b.height / 2 - h / 2, MAP.height - h), w, h];
     }
 
+
     /* =================================================================
-       FILTERING
-       One function decides which sites to show. The map, the amenity
-       chips, and the Phone Only tab all go through it.
+       SHARED HELPERS: dates, phone links, external links, sources
        ================================================================= */
-    function filterSites(sites, district, need) {
-      return sites.filter(site => {
-        const inArea = district === "all" || site.district === district;
-        const hasNeed = need === "all" || site.needs.includes(need);
+    function formatDate(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    }
+    const telHref = phone => "tel:+1" + phone.replace(/\D/g, "").slice(-10);
+    const directionsHref = addr => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addr);
+
+    // One action. The first action on a result is a solid button; the rest are
+    // plain links. External links say where they go and open in a new tab.
+    function actionLink(a, primary = false) {
+      const cls = primary ? "action primary" : "action";
+      if (a.tel) return `<a class="${cls}" href="${telHref(a.tel)}">${a.label}<small>${a.tel}</small></a>`;
+      if (a.directions) {
+        return `<a class="${cls}" href="${directionsHref(a.directions)}" target="_blank" rel="noopener">${a.label}<small>Opens Google Maps (new tab)</small></a>`;
+      }
+      const external = /^https?:/.test(a.href);
+      const note = a.note ? `${a.note}${external ? " (new tab)" : ""}` : "";
+      return `<a class="${cls}" href="${a.href}"${external ? ' target="_blank" rel="noopener"' : ""}>${a.label}${note ? `<small>${note}</small>` : ""}</a>`;
+    }
+
+    // "Official details" plus every other page a fact came from
+    // checked: the date this record's sources were read (records added later carry their own)
+    function sourceLine(urls, checked = CHECKED) {
+      const [first, ...rest] = urls;
+      const others = rest.length
+        ? `<details class="all-sources"><summary>All sources (${urls.length})</summary><ul>${urls.map(u => `<li><a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/, "")}</a></li>`).join("")}</ul></details>`
+        : "";
+      return `<div class="res-source"><p><a href="${first}" target="_blank" rel="noopener">Official details</a> <span>Source checked ${formatDate(checked)}</span></p>${others}</div>`;
+    }
+
+    // Guard so a result list never shows the same resource twice
+    const uniqueById = list => list.filter((r, i) => list.findIndex(x => x.id === r.id) === i);
+
+    /* =================================================================
+       NEARBY HELP: map + location and service filters
+       Places only. One function decides which places to show.
+       ================================================================= */
+    function filterPlaces(places, district, need) {
+      return places.filter(place => {
+        const inArea = district === "all" || place.district === district;
+        const hasNeed = need === "all" || place.needs.includes(need);
         return inArea && hasNeed;
       });
     }
 
-    // withRules: also show the "Before you go" rules for that library system
-    function siteCard(s, withRules = false) {
+    function placeCard(s) {
       const area = DISTRICT_BY_ID[s.district];
-      const access = withRules && s.system ? ACCESS_RULES[s.system] : null;
+      const access = s.system ? ACCESS_RULES[s.system] : null;
       const actions = [];
-      if (access && access.reserve) actions.push(actionLink(access.reserve, true));
-      if (s.phone) actions.push(actionLink({ label: "Call this location", tel: s.phone }));
-      if (s.verified) actions.push(actionLink({ label: "Get directions", directions: s.addr }));
+      if (access && access.reserve) actions.push(access.reserve);
+      if (access && access.book) actions.push(access.book);
+      if (s.phone) actions.push({ label: "Call this location", tel: s.phone });
+      if (s.verified) actions.push({ label: "Get directions", directions: s.addr });
       const sources = s.page ? [s.page, ...(access ? access.sources : [])] : [];
-      return `<div class="card site" data-site="${SITES.indexOf(s)}">
-    <h3>${s.name}</h3>
-    <div class="region-tag">${area ? area.name : ""}</div>
-    <div class="addr">${s.addr}</div>
-    <p class="services"><b>Services:</b> ${s.needs.length ? s.needs.map(n => NEED_LABELS[n] || n).join(", ") : "None confirmed online"}</p>
-    ${s.verified ? "" : '<div class="verify">Unconfirmed. Call ahead before you go.</div>'}
-    ${access ? `<p class="mini-head">Before you go</p><ul class="rules">${access.rules.map(r => `<li>${r}</li>`).join("")}</ul>` : ""}
-    ${actions.length ? `<div class="actions">${actions.join("")}</div>` : ""}
-    ${sources.length ? sourceLine(sources) : ""}
-  </div>`;
+      return `<article class="site" data-id="${s.id}">
+        <h3>${s.name}</h3>
+        <p class="addr">${s.addr}</p>
+        <p class="meta">${area ? area.name : ""}</p>
+        <p class="services">Services: ${s.needs.length ? s.needs.map(n => NEED_LABELS[n] || n).join(", ") : "none confirmed online"}</p>
+        ${s.verified ? "" : '<p class="verify">Unconfirmed. Call ahead before you go.</p>'}
+        ${actions.length ? `<div class="actions">${actions.map((a, i) => actionLink(a, i === 0 && !!a.href)).join("")}</div>` : ""}
+        ${access ? `<details class="req"><summary>Before you go</summary><ul class="rules">${access.rules.map(r => `<li>${r}</li>`).join("")}</ul></details>` : ""}
+        ${sources.length ? sourceLine(sources, s.checked) : ""}
+      </article>`;
     }
 
-    const EMPTY_CARD = `<div class="empty-card"><strong>No physical hubs found matching this exact filter combination yet.</strong>Try broadening your area!</div>`;
+    // Help offered by appointment across an area, with no single address to map
+    function serviceCard(s) {
+      const areas = s.serves.map(id => DISTRICT_BY_ID[id].name).join(" and ");
+      return `<article class="site" data-id="${s.id}">
+        <h3>${s.name}</h3>
+        <p class="meta">By appointment. Serves ${areas}.</p>
+        <p class="addr">${s.what}</p>
+        <p class="verify">${s.notes}</p>
+        <div class="actions">${actionLink(s.book, true)}${s.phone ? actionLink({ label: "Call the library", tel: s.phone }) : ""}</div>
+        ${sourceLine(s.sources, s.checked)}
+      </article>`;
+    }
 
-    /* ---------- Directory state ---------- */
+    function filterServices(services, district, need) {
+      if (need !== "all" && need !== "navigator") return [];
+      return services.filter(s => district === "all" || s.serves.includes(district));
+    }
+
     const state = { district: "all", need: "all" };
     const resetBtn = document.getElementById("map-reset");
+    const areaSelect = document.getElementById("nearby-area");
 
     function renderDirectory() {
-      const list = filterSites(SITES, state.district, state.need);
-      document.getElementById("site-list").innerHTML = list.length ? list.map(s => siteCard(s)).join("") : EMPTY_CARD;
-
+      const places = uniqueById(filterPlaces(PLACES, state.district, state.need));
+      const services = uniqueById(filterServices(SERVICES, state.district, state.need));
+      const list = [...places, ...services];
+      const listEl = document.getElementById("site-list");
+      if (list.length) {
+        listEl.innerHTML = places.map(placeCard).join("") +
+          (services.length ? `<p class="mini-head list-head">Tech help by appointment</p>${services.map(serviceCard).join("")}` : "");
+      } else {
+        listEl.innerHTML = `<div class="empty-note">
+          <p>No verified location in this area offers that service yet. Coverage is limited to places we could confirm on official websites.</p>
+          <button class="opt" type="button" data-show-all>Show this service in all areas</button>
+        </div>`;
+      }
       const area = DISTRICT_BY_ID[state.district];
       document.getElementById("area-name").textContent = area ? area.name : "Whole region";
       document.getElementById("area-places").textContent = area ? area.places : "Six areas across Missouri and Illinois";
-      document.getElementById("area-count").textContent = `${list.length} ${list.length === 1 ? "place" : "places"}`;
+      document.getElementById("area-count").textContent = `${list.length} ${list.length === 1 ? "result" : "results"}`;
+      areaSelect.value = state.district;
     }
 
     function selectDistrict(id) {
@@ -2222,7 +2557,7 @@
 
     svg.addEventListener("click", e => {
       const pin = e.target.closest(".pin");
-      if (pin) return showSite(+pin.dataset.site);
+      if (pin) return showPlace(pin.dataset.id);
       const shape = e.target.closest(".district");
       if (!shape) return;
       // Tapping the area you're already zoomed into zooms back out
@@ -2238,18 +2573,23 @@
     });
 
     document.addEventListener("keydown", e => {
-      if (e.key === "Escape" && state.district !== "all") resetMap();
+      if (e.key === "Escape" && state.district !== "all" && document.getElementById("view-directory").classList.contains("active")) resetMap();
     });
 
     resetBtn.addEventListener("click", resetMap);
 
-    // Tapping a dot zooms to its area (if needed) and highlights its card
-    function showSite(index) {
-      const site = SITES[index];
-      if (!site) return;
-      if (state.district !== site.district) selectDistrict(site.district);
-      if (state.need !== "all" && !site.needs.includes(state.need)) setNeed("all");
-      const card = document.querySelector(`#site-list .site[data-site="${index}"]`);
+    // The Location dropdown and the map stay in sync
+    areaSelect.addEventListener("change", () => {
+      if (areaSelect.value === "all") resetMap(); else selectDistrict(areaSelect.value);
+    });
+
+    // Tapping a dot zooms to its area (if needed) and highlights its listing
+    function showPlace(id) {
+      const place = RESOURCE_BY_ID[id];
+      if (!place) return;
+      if (state.district !== place.district) selectDistrict(place.district);
+      if (state.need !== "all" && !place.needs.includes(state.need)) setNeed("all");
+      const card = document.querySelector(`#site-list .site[data-id="${id}"]`);
       if (!card) return;
       card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
       card.classList.add("flash");
@@ -2258,7 +2598,11 @@
 
     function setNeed(need) {
       state.need = need;
-      document.querySelectorAll("#amenity-filters .chip").forEach(c => c.classList.toggle("on", c.dataset.need === need));
+      document.querySelectorAll("#amenity-filters .chip").forEach(c => {
+        const on = c.dataset.need === need;
+        c.classList.toggle("on", on);
+        c.setAttribute("aria-pressed", String(on));
+      });
       renderDirectory();
     }
 
@@ -2267,82 +2611,30 @@
       if (chip) setNeed(chip.dataset.need);
     });
 
-    /* =================================================================
-       FEATURE 3: PHONE-ONLY MODE
-       Same data and same filter, a different lens.
-       ================================================================= */
-    let needFilter = "all";
-
-    function renderMobile() {
-      const list = filterSites(SITES, "all", needFilter);
-      document.getElementById("mobile-list").innerHTML =
-        list.length ? list.map(s => siteCard(s)).join("") : '<div class="empty">No locations match that filter yet.</div>';
-    }
-
-    document.getElementById("need-filters").addEventListener("click", e => {
-      const chip = e.target.closest(".chip");
-      if (!chip) return;
-      needFilter = chip.dataset.need;
-      document.querySelectorAll("#need-filters .chip").forEach(c => c.classList.toggle("on", c === chip));
-      renderMobile();
+    document.getElementById("site-list").addEventListener("click", e => {
+      if (e.target.closest("[data-show-all]")) resetMap();
     });
 
     /* =================================================================
-       SHARED HELPERS: dates, phone links, external links, sources
-       ================================================================= */
-    function formatDate(iso) {
-      const [y, m, d] = iso.split("-").map(Number);
-      return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    }
-    const telHref = phone => "tel:+1" + phone.replace(/\D/g, "").slice(-10);
-    const directionsHref = addr => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addr);
-
-    // One action button. External links say where they go and open in a new tab.
-    function actionLink(a, primary = false) {
-      const cls = `action ${primary ? "primary" : "secondary"}`;
-      if (a.tel) return `<a class="${cls}" href="${telHref(a.tel)}">${a.label}<small>${a.tel}</small></a>`;
-      if (a.directions) {
-        return `<a class="${cls}" href="${directionsHref(a.directions)}" target="_blank" rel="noopener">${a.label}<small>Opens Google Maps (new tab)</small></a>`;
-      }
-      const external = /^https?:/.test(a.href);
-      const note = a.note ? `${a.note}${external ? " (new tab)" : ""}` : "";
-      return `<a class="${cls}" href="${a.href}"${external ? ' target="_blank" rel="noopener"' : ""}>${a.label}${note ? `<small>${note}</small>` : ""}</a>`;
-    }
-
-    // "Official details" plus every other page a fact came from
-    function sourceLine(urls) {
-      const [first, ...rest] = urls;
-      const others = rest.length
-        ? `<details class="all-sources"><summary>All sources (${urls.length})</summary><ul>${urls.map(u => `<li><a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/, "")}</a></li>`).join("")}</ul></details>`
-        : "";
-      return `<div class="res-source"><p><a href="${first}" target="_blank" rel="noopener">Official details</a> <span>Source checked ${formatDate(CHECKED)}</span></p>${others}</div>`;
-    }
-
-    /* =================================================================
-       FEATURE 0: GET CONNECTED
-       One question first (what do you need?), then only the questions
-       that matter for that need, then sourced results with next steps.
+       GET CONNECTED
+       Choose a need, pick a location, answer only the questions that
+       matter for that need, then see sourced options with next steps.
        ================================================================= */
     const AREA_NAMES = {
       city: "St. Louis City", county: "St. Louis County",
       madison: "Madison County, IL", stclair: "St. Clair County, IL", other: "your area"
     };
-    const AREA_DISTRICTS = {
-      city: ["city-north", "city-south"], county: ["county-north", "county-central"],
-      madison: ["madison"], stclair: ["stclair"]
-    };
     const NEED_TITLES = {
-      computer: "a computer to keep", borrow: "a device to borrow",
-      internet: "internet at home", today: "computer access today"
+      computer: "a computer to keep", borrow: "a device to borrow", internet: "internet at home"
     };
+    // Relevant fallbacks: another need in this section, or a service filter in Nearby help
     const ALTERNATIVES = {
-      computer: [["borrow", "Borrow a laptop for a few weeks"], ["today", "Use a computer today"]],
-      borrow: [["computer", "Get a computer to keep"], ["today", "Use a computer today"]],
-      internet: [["borrow", "Borrow a hotspot"], ["today", "Use free Wi-Fi at a library"]],
-      today: [["borrow", "Borrow a laptop or hotspot"], ["internet", "Get internet at home"]]
+      computer: [{ need: "borrow", label: "Borrow a laptop for a few weeks" }, { nearby: "public-computer", label: "Use a public computer nearby" }],
+      borrow: [{ need: "computer", label: "Get a computer to keep" }, { nearby: "public-computer", label: "Use a public computer nearby" }],
+      internet: [{ need: "borrow", label: "Borrow a hotspot" }, { nearby: "wifi", label: "Find free Wi-Fi nearby" }]
     };
 
-    const guide = { need: null, area: null, age: null };
+    const guide = { need: null, area: null, age: null, submitted: false };
 
     function guideAnswers() {
       const raw = parseFloat(document.getElementById("g-income").value);
@@ -2355,16 +2647,24 @@
         benefits: checked.filter(v => BENEFITS[v]),
         benefitsStatus: checked.includes("unknown") ? "unknown"
           : checked.includes("none") ? "none"
-            : checked.length ? "some" : "unanswered"
+          : checked.length ? "some" : "unanswered"
       };
     }
 
     const listText = (items, word = "and") => items.length < 3 ? items.join(` ${word} `) : `${items.slice(0, -1).join(", ")}, ${word} ${items[items.length - 1]}`;
 
-    /* Explain why a resource may or may not fit, using only the rules
-       the organization published. Returns null if it isn't offered in
-       the person's area at all. */
+    /* Explain why a resource may or may not fit, using only the rules the
+       organization published. Unknown answers are never treated as a yes
+       or a no: they lead to "may fit". Returns null if the resource isn't
+       offered in the person's area at all. */
+    // Adds any extra requirement (for example, a K-12 student) to the explanation
     function assessFit(r, a) {
+      const fit = assessRules(r, a);
+      if (fit && r.alsoRequires) fit.reasons.push(r.alsoRequires);
+      return fit;
+    }
+
+    function assessRules(r, a) {
       if (r.areas !== "all" && !r.areas.includes(a.area)) return null;
 
       if (r.ageMin) {
@@ -2406,34 +2706,38 @@
         return { level: "maybe", reasons: [`You qualify only if someone in your home gets ${accepted}.`] };
       }
 
-      return { level: "maybe", reasons: ["You didn't share your income or benefits, so check who qualifies below."] };
+      const missing = a.income == null ? "your income" : "a program this accepts";
+      return { level: "maybe", reasons: [`We don't know ${missing} yet, so this isn't confirmed either way. Check who qualifies under Requirements and steps.`] };
     }
 
     const NOT_LISTED = '<span class="unconfirmed">Not listed by the organization. Ask when you contact them.</span>';
-    const FIT_TITLES = { good: "Why this may fit you", maybe: "May fit. Check the details", unlikely: "Why this may not fit" };
+    const FIT_TITLES = { good: "Why this may fit", maybe: "May fit. Not confirmed yet", unlikely: "Why this may not fit" };
 
     function resourceCard({ r, fit }) {
-      return `<article class="res">
-    <p class="res-kind">${r.kind}</p>
-    <h3>${r.title}</h3>
-    <p class="org">${r.org}</p>
-    <div class="fit ${fit.level}">
-      <p class="fit-title">${FIT_TITLES[fit.level]}</p>
-      <ul>${fit.reasons.map(x => `<li>${x}</li>`).join("")}</ul>
-    </div>
-    <dl class="facts">
-      <div><dt>What you get</dt><dd>${r.what}</dd></div>
-      <div><dt>Who qualifies</dt><dd>${r.qualifies}</dd></div>
-      <div><dt>Cost and fees</dt><dd>${r.cost || NOT_LISTED}</dd></div>
-      <div><dt>What to have ready</dt><dd>${r.bring ? `<ul>${r.bring.map(x => `<li>${x}</li>`).join("")}</ul>` : NOT_LISTED}</dd></div>
-    </dl>
-    <p class="mini-head">Your next steps</p>
-    <ol class="steps">${r.steps.map(x => `<li>${x}</li>`).join("")}</ol>
-    <p class="next"><b>What happens next:</b> ${r.next || "Not stated by the organization."}</p>
-    ${r.availability ? `<p class="avail">${r.availability}</p>` : ""}
-    <div class="actions">${r.actions.map((x, i) => actionLink(x, i === 0)).join("")}</div>
-    ${sourceLine(r.sources)}
-  </article>`;
+      const [primary, ...secondary] = r.actions;
+      return `<article class="res" data-id="${r.id}">
+        <p class="res-kind">${r.access}</p>
+        <h3>${r.title}</h3>
+        <p class="org">${r.org}</p>
+        <p class="what">${r.what}</p>
+        <p class="cost"><span class="label">Cost</span> ${r.cost || NOT_LISTED}</p>
+        <div class="fit ${fit.level}">
+          <p class="fit-title">${FIT_TITLES[fit.level]}</p>
+          <ul>${fit.reasons.map(x => `<li>${x}</li>`).join("")}</ul>
+        </div>
+        <p class="limits"><span class="label">Limits</span> ${r.limits}${r.availability ? ` ${r.availability}` : ""}</p>
+        <div class="actions">${actionLink(primary, true)}${secondary.map(x => actionLink(x)).join("")}</div>
+        <details class="req">
+          <summary>Requirements and steps</summary>
+          <dl class="facts">
+            <div><dt>Who qualifies</dt><dd>${r.qualifies}</dd></div>
+            <div><dt>What to have ready</dt><dd>${r.bring ? `<ul>${r.bring.map(x => `<li>${x}</li>`).join("")}</ul>` : NOT_LISTED}</dd></div>
+            <div><dt>Steps</dt><dd><ol class="steps">${r.steps.map(x => `<li>${x}</li>`).join("")}</ol></dd></div>
+            <div><dt>What happens next</dt><dd>${r.next || "Not stated by the organization."}</dd></div>
+          </dl>
+        </details>
+        ${sourceLine(r.sources, r.checked)}
+      </article>`;
     }
 
     function guideNotices(a) {
@@ -2458,22 +2762,14 @@
       return notes.map(n => `<p class="notice">${n}</p>`).join("");
     }
 
-    function todayResults(a) {
-      const districts = AREA_DISTRICTS[a.area];
-      const sites = SITES
-        .filter(s => !districts || districts.includes(s.district))
-        .filter(s => !s.verified || s.needs.some(n => ["public-computer", "wifi", "navigator"].includes(n)))
-        .sort((x, y) => Number(y.verified) - Number(x.verified));
-      if (!sites.length) return "";
-      return `<div class="card-list">${sites.map(s => siteCard(s, true)).join("")}</div>`;
-    }
-
     function alternativesBlock(a, prominent) {
-      const buttons = ALTERNATIVES[a.need].map(([need, label]) => `<button class="opt" data-switch-need="${need}">${label}</button>`).join("");
+      const buttons = ALTERNATIVES[a.need].map(alt => alt.need
+        ? `<button class="opt" type="button" data-switch-need="${alt.need}">${alt.label}</button>`
+        : `<button class="opt" type="button" data-go-nearby="${alt.nearby}">${alt.label}</button>`).join("");
       return `<section class="alts${prominent ? " prominent" : ""}">
-    <p class="mini-head">${prominent ? "Try another way to get connected" : "Other ways to get connected"}</p>
-    <div class="option-row">${buttons}</div>
-  </section>`;
+        <p class="mini-head">${prominent ? "Other options" : "Other ways to get connected"}</p>
+        <div class="option-row">${buttons}</div>
+      </section>`;
     }
 
     function renderGuide() {
@@ -2483,45 +2779,37 @@
       document.getElementById("guide-questions").hidden = !guide.need;
 
       const out = document.getElementById("guide-results");
-      if (!guide.need) { out.innerHTML = ""; return; }
+      if (!guide.need || !guide.submitted) { out.innerHTML = ""; return; }
       if (!guide.area) { out.innerHTML = '<p class="step-hint">Select a location to see your options.</p>'; return; }
 
       const a = guideAnswers();
+      const order = { good: 0, maybe: 1, unlikely: 2 };
+      const scored = uniqueById(PROGRAMS.filter(r => r.need === a.need))
+        .map(r => ({ r, fit: assessFit(r, a) }))
+        .filter(x => x.fit)
+        .sort((x, y) => order[x.fit.level] - order[y.fit.level]);
+      const likely = scored.filter(x => x.fit.level !== "unlikely");
+      const unlikely = scored.filter(x => x.fit.level === "unlikely");
+
       let html = `<div class="results-head">
-    <h3>Options for ${NEED_TITLES[a.need]}${a.area === "other" ? "" : ` in ${AREA_NAMES[a.area]}`}</h3>
-    <p class="results-note">STL Digital Navigator does not take applications or hand out devices. Buttons marked "new tab" open the organization's own website.</p>
-  </div>`;
+        <h3>Options for ${NEED_TITLES[a.need]}${a.area === "other" ? "" : ` in ${AREA_NAMES[a.area]}`}</h3>
+        <p class="results-note">STL Digital Navigator does not take applications or hand out devices. Links marked "new tab" open the organization's own website.</p>
+      </div>`;
       html += guideNotices(a);
-
-      if (a.need === "today") {
-        const list = todayResults(a);
-        html += list || `<div class="empty-card"><strong>No confirmed locations in this area yet.</strong>Try the whole region on the Find Help map.</div>`;
-        html += alternativesBlock(a, false);
-      } else {
-        const order = { good: 0, maybe: 1, unlikely: 2 };
-        const scored = RESOURCES
-          .filter(r => r.need === a.need)
-          .map(r => ({ r, fit: assessFit(r, a) }))
-          .filter(x => x.fit)
-          .sort((x, y) => order[x.fit.level] - order[y.fit.level]);
-        const likely = scored.filter(x => x.fit.level !== "unlikely");
-        const unlikely = scored.filter(x => x.fit.level === "unlikely");
-
-        html += likely.map(resourceCard).join("");
-        if (!likely.length) {
-          html += `<div class="empty-card"><strong>No program we've checked clearly fits your answers.</strong>That doesn't mean help isn't out there. Try another option below, or ask at your local library.</div>`;
-        }
-        if (unlikely.length) {
-          html += `<details class="more"><summary>Probably not a fit (${unlikely.length})</summary>${unlikely.map(resourceCard).join("")}</details>`;
-        }
-        html += alternativesBlock(a, !likely.length);
+      html += `<div class="res-list">${likely.map(resourceCard).join("")}</div>`;
+      if (!likely.length) {
+        html += `<div class="empty-note"><p>No verified program clearly fits these answers. Our coverage is limited to programs we could confirm on official websites, so this doesn't mean help isn't available. Your local library can also help.</p></div>`;
       }
+      if (unlikely.length) {
+        html += `<details class="more"><summary>Probably not a fit (${unlikely.length})</summary><div class="res-list">${unlikely.map(resourceCard).join("")}</div></details>`;
+      }
+      html += alternativesBlock(a, !likely.length);
       out.innerHTML = html;
     }
 
     function setGuideNeed(need, scroll = true) {
       guide.need = need;
-      // Keep the radio buttons in sync when the need changes from an "other ways" button
+      // Keep the radio buttons in sync when the need changes from an "other options" button
       document.querySelectorAll('#need-options input[name="guide-need"]').forEach(r => { r.checked = r.value === need; });
       renderGuide();
       // "nearest" only scrolls when the questions are off screen, so arrow-key
@@ -2562,26 +2850,58 @@
     });
     ["g-hh", "g-income"].forEach(id => document.getElementById(id).addEventListener("input", renderGuide));
 
-    document.getElementById("guide-results").addEventListener("click", e => {
-      const btn = e.target.closest("[data-switch-need]");
-      if (!btn) return;
-      setGuideNeed(btn.dataset.switchNeed, false);
-      document.getElementById("view-guide").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    // Results appear after "Show options", then stay current as answers change
+    document.getElementById("guide-form").addEventListener("submit", e => {
+      e.preventDefault();
+      guide.submitted = true;
+      renderGuide();
+      if (!guide.area) {
+        document.getElementById("q-area").focus();
+        return;
+      }
+      document.getElementById("guide-results").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
 
-    /* ---------- Tab switching ---------- */
-    document.querySelectorAll("nav button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("nav button").forEach(b => {
-          b.classList.remove("active");
-          b.removeAttribute("aria-current");
-        });
-        btn.classList.add("active");
-        btn.setAttribute("aria-current", "page");
-        document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-        document.getElementById(btn.dataset.view).classList.add("active");
-        window.scrollTo(0, 0);
-        setView(currentView); // the map had no size while its tab was hidden
+    document.getElementById("guide-results").addEventListener("click", e => {
+      const switchBtn = e.target.closest("[data-switch-need]");
+      if (switchBtn) {
+        setGuideNeed(switchBtn.dataset.switchNeed, false);
+        document.getElementById("view-guide").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        return;
+      }
+      const nearbyBtn = e.target.closest("[data-go-nearby]");
+      if (nearbyBtn) {
+        showView("view-directory");
+        setNeed(nearbyBtn.dataset.goNearby);
+      }
+    });
+
+    /* =================================================================
+       NAVIGATION: Home, Get connected, Nearby help
+       ================================================================= */
+    function showView(id) {
+      document.querySelectorAll("nav button").forEach(b => {
+        const on = b.dataset.view === id;
+        b.classList.toggle("active", on);
+        if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+      });
+      document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === id));
+      window.scrollTo(0, 0);
+      setView(currentView); // the map had no size while its section was hidden
+    }
+
+    document.querySelector("nav").addEventListener("click", e => {
+      const btn = e.target.closest("button[data-view]");
+      if (btn) showView(btn.dataset.view);
+    });
+
+    // Home entry links
+    document.querySelectorAll("[data-go]").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        showView(link.dataset.go);
+        const heading = document.querySelector(`#${link.dataset.go} h2`);
+        if (heading) heading.focus({ preventScroll: true });
       });
     });
 
@@ -2589,11 +2909,10 @@
 
     setView(FULL_VIEW);
     renderDirectory();
-    renderMobile();
 
     /* ---------- PWA service worker (lets the app open offline) ---------- */
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").catch(() => { });
+      navigator.serviceWorker.register("sw.js").catch(() => {});
     }
   </script>
 </body>
